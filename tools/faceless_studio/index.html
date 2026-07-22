@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Faceless Studio — dashboard</title>
+<style>
+  :root{
+    --bg:#f5f6fb; --surface:#ffffff; --surface-2:#eef0f7; --ink:#14161c; --muted:#5b6274;
+    --line:#e2e5ef; --accent:#5457e8; --accent-2:#8b5cf6; --teal:#0d7d70; --amber:#a55a0a; --danger:#b4243a;
+    --code-bg:#14161f; --code-ink:#e7e9f2; --code-dim:#8b90a6;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,"Cascadia Code","SF Mono",Menlo,Consolas,monospace;
+    --radius:14px; --shadow:0 1px 2px rgba(20,22,28,.05),0 10px 34px rgba(20,22,28,.07);
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --bg:#0c0e15; --surface:#141722; --surface-2:#1b1f2c; --ink:#ecedf5; --muted:#99a0b6;
+    --line:#262b3a; --accent:#7d80f6; --accent-2:#a78bfa; --teal:#2dd4bf; --amber:#f6b13c; --danger:#f2647a;
+    --code-bg:#090a10; --code-dim:#7a8099; --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 34px rgba(0,0,0,.4);
+  }}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px 90px}
+  header{display:flex;align-items:center;gap:12px;padding:20px 0 18px;position:sticky;top:0;background:linear-gradient(var(--bg),var(--bg) 70%,transparent);z-index:5}
+  .dot{width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent-2))}
+  h1{font-size:20px;margin:0;letter-spacing:-.01em}
+  header small{font-family:var(--mono);color:var(--muted);font-size:12px;display:block}
+  header .grow{flex:1}
+  .btn{font-family:var(--sans);font-size:15px;font-weight:600;color:#fff;background:var(--accent);border:none;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .btn:hover{filter:brightness(1.06)} .btn:disabled{opacity:.5;cursor:not-allowed}
+  .btn.ghost{background:var(--surface-2);color:var(--ink);border:1px solid var(--line)}
+  .btn.sm{font-size:13px;padding:8px 14px}
+  a.btn{text-decoration:none;display:inline-block}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-bottom:20px}
+  .card.dim{opacity:.5;pointer-events:none}
+  .step{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 4px}
+  h2{font-size:18px;margin:0 0 4px;letter-spacing:-.01em}
+  h3{font-size:16px;margin:0}
+  .hint{color:var(--muted);font-size:13.5px;margin:0 0 16px}
+  .hidden{display:none}
+  .muted{color:var(--muted)}
+
+  /* dashboard */
+  .dashhead{display:flex;align-items:flex-end;gap:14px;margin:6px 0 18px}
+  .dashhead h2{font-size:24px;margin:0}
+  .grid-v{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+  .vcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+  .vcard video{width:100%;aspect-ratio:16/9;background:#000;display:block;object-fit:contain}
+  .vcard.vert video{aspect-ratio:9/16;max-height:420px}
+  .vmeta{padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+  .vmeta .name{font-weight:600;font-size:14px;word-break:break-word}
+  .badges{display:flex;gap:6px;flex-wrap:wrap}
+  .badge{font-family:var(--mono);font-size:11px;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:2px 9px;color:var(--muted)}
+  .vactions{display:flex;gap:8px;margin-top:2px}
+  .empty{text-align:center;color:var(--muted);padding:50px 20px;border:1px dashed var(--line);border-radius:var(--radius)}
+
+  /* forms */
+  .seg{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+  .seg button{flex:1;min-width:120px;font-family:var(--sans);font-size:14px;padding:11px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface-2);color:var(--muted);cursor:pointer}
+  .seg button.on{background:color-mix(in srgb,var(--accent) 14%,transparent);border-color:var(--accent);color:var(--ink);font-weight:600}
+  label{display:block;font-size:13px;color:var(--muted);margin:0 0 6px;font-weight:500}
+  input[type=text],textarea{width:100%;font-family:var(--mono);font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  textarea{resize:vertical;line-height:1.5}
+  input[type=text]:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+  .row{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-top:14px}
+  .opt{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0}
+  .chip{font-family:var(--mono);font-size:12px;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:4px 11px;color:var(--muted)}
+  .grid{display:grid;gap:14px}
+
+  /* template picker */
+  .tpl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:6px 0 4px}
+  .tpl{border:1.5px solid var(--line);border-radius:12px;padding:12px;cursor:pointer;background:var(--surface);transition:border-color .12s}
+  .tpl:hover{border-color:var(--accent)}
+  .tpl.on{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
+  .tpl .swatch{height:44px;border-radius:8px;margin-bottom:10px;position:relative;overflow:hidden}
+  .tpl .dots{position:absolute;left:8px;bottom:7px;display:flex;gap:5px}
+  .tpl .dots span{width:14px;height:14px;border-radius:50%;border:1.5px solid rgba(255,255,255,.6)}
+  .tpl .tname{font-weight:600;font-size:14px}
+  .tpl .tdesc{font-size:12px;color:var(--muted);line-height:1.4;margin-top:2px}
+  .tpl .tfonts{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:6px}
+
+  pre.logbox{background:var(--code-bg);color:var(--code-ink);font-family:var(--mono);font-size:12.5px;line-height:1.6;border-radius:10px;padding:14px 16px;max-height:240px;overflow:auto;white-space:pre-wrap;margin:0}
+  pre.logbox .c{color:var(--code-dim)}
+  video.result{width:100%;border-radius:12px;border:1px solid var(--line);background:#000;margin-top:6px}
+  .err{background:color-mix(in srgb,var(--danger) 12%,transparent);border:1px solid var(--danger);color:var(--danger);border-radius:10px;padding:12px 14px;font-size:14px;margin-top:14px}
+  .spin{display:inline-block;width:14px;height:14px;border:2px solid var(--muted);border-top-color:transparent;border-radius:50%;animation:s .8s linear infinite;vertical-align:-2px;margin-right:8px}
+  @keyframes s{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.spin{animation:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="dot"></span>
+    <div><h1>Faceless Studio</h1><small>create a video from a source — no footage</small></div>
+    <span class="grow"></span>
+    <button class="btn ghost sm" id="nav-dash">Dashboard</button>
+    <button class="btn ghost sm" id="nav-editor" title="Open Remotion Studio — preview &amp; render on :3000">🎬 Video editor</button>
+    <button class="btn sm" id="nav-new">+ New video</button>
+  </header>
+
+  <!-- ============ DASHBOARD ============ -->
+  <section id="view-dash">
+    <div class="dashhead">
+      <h2>Your videos</h2>
+      <span class="grow"></span>
+      <button class="btn ghost sm" id="refresh">Refresh</button>
+    </div>
+    <div id="video-grid" class="grid-v"></div>
+    <div id="video-empty" class="empty hidden">
+      No videos yet. Click <b>+ New video</b> to make your first one.
+    </div>
+  </section>
+
+  <!-- ============ CREATE WIZARD ============ -->
+  <section id="view-create" class="hidden">
+    <!-- STEP 1 — SOURCE -->
+    <section class="card" id="c1">
+      <p class="step">Step 1 · Source</p>
+      <h2>What should the video be about?</h2>
+      <p class="hint">Pick a source type, then paste the link or text. Public sources only.</p>
+      <div class="seg" id="seg">
+        <button data-t="github" class="on">GitHub repo</button>
+        <button data-t="article">Article / webpage</button>
+        <button data-t="text">Pasted text</button>
+      </div>
+      <div id="in-url"><label id="url-label">Repository URL</label>
+        <input type="text" id="url" placeholder="https://github.com/owner/repository" /></div>
+      <div id="in-text" class="hidden"><label>Your text</label>
+        <textarea id="text" rows="7" placeholder="Paste the content you want turned into a video…"></textarea></div>
+      <button class="btn" id="analyze">Analyze source</button>
+      <div id="analyze-err" class="err hidden"></div>
+    </section>
+
+    <!-- STEP 2 — REVIEW -->
+    <section class="card dim" id="c2">
+      <p class="step">Step 2 · Review &amp; template</p>
+      <h2>Check the content, then pick a look</h2>
+      <p class="hint">Correct anything inaccurate — nothing is invented, only what the source contains.</p>
+      <div class="grid">
+        <div><label>Title</label><input type="text" id="r-title" /></div>
+        <div><label>Summary</label><textarea id="r-summary" rows="3"></textarea></div>
+        <div><label>Key points (one per line)</label><textarea id="r-points" rows="5"></textarea></div>
+        <div><label>Detected (read-only)</label><div class="chips" id="r-chips"></div></div>
+      </div>
+
+      <label style="margin-top:18px">Template</label>
+      <div class="tpl-grid" id="tpl-grid"></div>
+
+      <div class="row">
+        <div class="opt"><input type="radio" name="fmt" id="fmt-l" value="landscape" checked /><label for="fmt-l" style="margin:0">Landscape 16:9</label></div>
+        <div class="opt"><input type="radio" name="fmt" id="fmt-v" value="vertical" /><label for="fmt-v" style="margin:0">Vertical 9:16</label></div>
+        <div class="opt"><input type="checkbox" id="cap" checked /><label for="cap" style="margin:0">Captions</label></div>
+        <div class="opt"><input type="checkbox" id="vo" /><label for="vo" style="margin:0">Voice-over (AI narration)</label></div>
+      </div>
+      <p class="hint" id="vo-hint" style="margin:10px 0 0">Voice-over speaks each scene with ElevenLabs — adds ~15–40s to the build and uses your API credits. Captions mirror the spoken words (emoji-free).</p>
+      <button class="btn" id="create">Create video</button>
+    </section>
+
+    <!-- STEP 3 — RESULT -->
+    <section class="card dim" id="c3">
+      <p class="step">Step 3 · Video</p>
+      <h2 id="c3h">Your video</h2>
+      <p class="hint" id="c3hint">Rendering takes ~30–60s (it bundles and renders every frame). Progress below.</p>
+      <pre class="logbox" id="log"><span class="c">waiting…</span></pre>
+      <div id="result" class="hidden"><video id="vid" class="result" controls></video>
+        <div class="row"><a class="btn ghost" id="dl" download>Download MP4</a>
+          <button class="btn ghost" id="again">Make another</button>
+          <button class="btn" id="to-dash">Back to dashboard</button></div></div>
+      <div id="gen-err" class="err hidden"></div>
+    </section>
+  </section>
+</div>
+
+<script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+let stype = "github";
+let templates = [];
+let selectedTemplate = "brand";
+
+// ---------- view switching ----------
+function showDash() {
+  $("view-dash").classList.remove("hidden");
+  $("view-create").classList.add("hidden");
+  loadVideos();
+}
+function showCreate() {
+  $("view-dash").classList.add("hidden");
+  $("view-create").classList.remove("hidden");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+$("nav-dash").addEventListener("click", showDash);
+$("to-dash") && $("to-dash");
+$("nav-new").addEventListener("click", showCreate);
+$("refresh").addEventListener("click", loadVideos);
+
+// ---------- dashboard: video library ----------
+async function loadVideos() {
+  let vids = [];
+  try { vids = (await (await fetch("/api/videos")).json()).videos || []; } catch (e) {}
+  const grid = $("video-grid");
+  $("video-empty").classList.toggle("hidden", vids.length > 0);
+  grid.innerHTML = vids.map((v) => {
+    const when = new Date(v.mtime * 1000).toLocaleString();
+    const mb = (v.size / 1048576).toFixed(1);
+    const fmt = v.vertical ? "9:16" : (v.width ? "16:9" : "video");
+    const url = v.url + "?t=" + v.mtime;
+    return `<div class="vcard ${v.vertical ? "vert" : ""}">
+      <video src="${esc(url)}" preload="metadata" controls muted></video>
+      <div class="vmeta">
+        <div class="name">${esc(v.id)}</div>
+        <div class="badges"><span class="badge">${fmt}</span><span class="badge">${mb} MB</span><span class="badge">${esc(when)}</span></div>
+        <div class="vactions">
+          <button class="btn ghost sm edit" data-id="${esc(v.id)}">Edit</button>
+          <a class="btn ghost sm" href="${esc(url)}" download="${esc(v.id)}.mp4">Download</a>
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+  grid.querySelectorAll(".edit").forEach((b) => b.addEventListener("click", () => openEditor(b.dataset.id)));
+}
+
+// ---------- video editor (Remotion Studio on :3000) ----------
+async function openEditor(compId) {
+  const target = "http://localhost:3000" + (compId ? "/" + encodeURIComponent(compId) : "");
+  // Open the tab synchronously (inside the click) so it isn't popup-blocked;
+  // point it at the editor once we know it's up.
+  const win = window.open("about:blank", "_blank");
+  const btn = $("nav-editor"); const label = btn.textContent;
+  btn.disabled = true; btn.textContent = "Starting editor…";
+  try {
+    let st = await (await fetch("/api/editor")).json();
+    if (!st.running) st = await (await fetch("/api/editor/start", { method: "POST" })).json();
+    if (st.running) {
+      if (win) win.location = target; else window.location = target;
+    } else {
+      if (win) win.close();
+      alert(st.error || "Editor is starting (bundling) — try again in a few seconds.");
+    }
+  } catch (e) {
+    if (win) win.close();
+    alert("Could not reach the video editor.");
+  } finally { btn.disabled = false; btn.textContent = label; }
+}
+$("nav-editor").addEventListener("click", () => openEditor());
+
+// ---------- templates ----------
+async function loadTemplates() {
+  try { templates = (await (await fetch("/api/templates")).json()).templates || []; } catch (e) { templates = []; }
+  const grid = $("tpl-grid");
+  grid.innerHTML = templates.map((t) => {
+    const g = t.gradient || ["#6366F1", "#9b7cc4", "#4db8a8"];
+    const c = t.colors || {};
+    const dots = [c.accent, c.signal, c.accent2, c.warn].filter(Boolean)
+      .map((x) => `<span style="background:${esc(x)}"></span>`).join("");
+    const grad = `linear-gradient(120deg, ${g.map(esc).join(", ")})`;
+    const fonts = t.fonts ? `${esc(t.fonts.display)} · ${esc(t.fonts.body)}` : "";
+    return `<div class="tpl" data-id="${esc(t.id)}">
+      <div class="swatch" style="background:${grad}"><div class="dots">${dots}</div></div>
+      <div class="tname">${esc(t.name)}</div>
+      <div class="tdesc">${esc(t.description || "")}</div>
+      <div class="tfonts">${fonts}</div>
+    </div>`;
+  }).join("");
+  grid.querySelectorAll(".tpl").forEach((el) => el.addEventListener("click", () => selectTemplate(el.dataset.id)));
+  if (templates.length) selectTemplate(templates.find((t) => t.id === "brand") ? "brand" : templates[0].id);
+}
+function selectTemplate(id) {
+  selectedTemplate = id;
+  $("tpl-grid").querySelectorAll(".tpl").forEach((el) => el.classList.toggle("on", el.dataset.id === id));
+  const t = templates.find((x) => x.id === id);
+  if (t && t.layout && typeof t.layout.captionsDefault === "boolean") $("cap").checked = t.layout.captionsDefault;
+}
+
+// ---------- source type switch ----------
+$("seg").addEventListener("click", (e) => {
+  const b = e.target.closest("button"); if (!b) return;
+  stype = b.dataset.t;
+  [...$("seg").children].forEach((x) => x.classList.toggle("on", x === b));
+  const isText = stype === "text";
+  $("in-url").classList.toggle("hidden", isText);
+  $("in-text").classList.toggle("hidden", !isText);
+  $("url-label").textContent = stype === "github" ? "Repository URL" : "Article / webpage URL";
+  $("url").placeholder = stype === "github" ? "https://github.com/owner/repository" : "https://example.com/article";
+});
+
+// ---------- analyze ----------
+$("analyze").addEventListener("click", async () => {
+  const body = { type: stype, url: $("url").value, text: $("text").value };
+  $("analyze-err").classList.add("hidden");
+  $("analyze").disabled = true; $("analyze").textContent = "Analyzing…";
+  try {
+    const r = await fetch("/api/analyze", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    const d = await r.json();
+    if (!d.ok) throw new Error(d.error || "Analysis failed.");
+    fillReview(d.source);
+    $("c2").classList.remove("dim");
+    $("c2").scrollIntoView({ behavior: "smooth", block: "start" });
+  } catch (e) {
+    const box = $("analyze-err"); box.textContent = e.message + "  — check the URL is public and correct, then try again."; box.classList.remove("hidden");
+  } finally { $("analyze").disabled = false; $("analyze").textContent = "Analyze source"; }
+});
+
+function fillReview(s) {
+  $("r-title").value = s.title || "";
+  $("r-summary").value = s.summary || "";
+  $("r-points").value = (s.key_points || []).join("\n");
+  const chips = [];
+  (s.features || []).slice(0, 6).forEach((f) => chips.push(f));
+  (s.tech_stack || []).forEach((t) => chips.push(t));
+  if (s.steps && s.steps.length) chips.push(s.steps.length + " setup step(s)");
+  if (s.missing && s.missing.length) chips.push("⚠ " + s.missing.join("; "));
+  $("r-chips").innerHTML = chips.length ? chips.map((c) => `<span class="chip">${esc(c)}</span>`).join("") : '<span class="chip">nothing extra detected</span>';
+}
+
+// ---------- create + poll ----------
+let poll = null;
+$("create").addEventListener("click", async () => {
+  const body = {
+    format: document.querySelector('input[name=fmt]:checked').value,
+    captions: $("cap").checked,
+    voiceover: $("vo").checked,
+    template: selectedTemplate,
+    title: $("r-title").value, summary: $("r-summary").value,
+    key_points: $("r-points").value.split("\n").map((x) => x.trim()).filter(Boolean),
+  };
+  $("gen-err").classList.add("hidden"); $("result").classList.add("hidden");
+  $("create").disabled = true;
+  $("c3").classList.remove("dim"); $("c3h").textContent = "Building your video…"; $("log").textContent = "starting…";
+  $("c3").scrollIntoView({ behavior: "smooth", block: "start" });
+  const r = await fetch("/api/generate", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  if (r.status === 409) { showGenErr("A render is already running — wait for it to finish."); $("create").disabled = false; return; }
+  poll = setInterval(tick, 1200); tick();
+});
+
+async function tick() {
+  const s = await (await fetch("/api/status")).json();
+  const spin = s.running ? '<span class="spin"></span>' : "";
+  $("c3h").innerHTML = spin + (s.phase === "done" ? "Your video" : s.phase === "error" ? "Something went wrong" : "Building your video… (" + s.phase + ")");
+  $("log").textContent = (s.log || []).join("\n") || "…";
+  $("log").scrollTop = $("log").scrollHeight;
+  if (!s.running && (s.ok || s.error)) {
+    clearInterval(poll); $("create").disabled = false;
+    if (s.ok && s.compId) {
+      const url = "/media/" + s.compId + ".mp4?t=" + Date.now();
+      $("vid").src = url; $("dl").href = url; $("dl").setAttribute("download", s.compId + ".mp4");
+      $("result").classList.remove("hidden");
+      $("c3hint").textContent = "Done. Play it below, download it, or go back to the dashboard.";
+      loadVideos(); // refresh the library in the background
+    } else {
+      showGenErr(s.error || "Render failed.");
+    }
+  }
+}
+function showGenErr(msg) { const b = $("gen-err"); b.textContent = msg + "  Your source and storyboard were saved — fix the input and try again."; b.classList.remove("hidden"); }
+$("again").addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+$("to-dash").addEventListener("click", showDash);
+
+// ---------- boot ----------
+loadTemplates();
+showDash();
+</script>
+</body>
+</html>

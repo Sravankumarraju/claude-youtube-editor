@@ -1,0 +1,80 @@
+{
+  "title": "crawl4ai",
+  "source_url": "https://github.com/unclecode/crawl4ai",
+  "scenes": [
+    {
+      "type": "title",
+      "dur": 110,
+      "eyebrow": "open-source · github",
+      "title": "crawl4ai",
+      "subtitle": "🚀🤖 Crawl4AI: Open-source LLM Friendly Web Crawler & Scraper.…",
+      "narration": "crawl4ai. 🚀🤖 Crawl4AI: Open-source LLM Friendly Web Crawler & Scraper.…"
+    },
+    {
+      "type": "statement",
+      "dur": 140,
+      "eyebrow": "overview",
+      "text": "🚀🤖 Crawl4AI: Open-source LLM Friendly Web Crawler & Scraper. Don't be shy, join here: https://discord.gg/jP8KfhDhyN",
+      "narration": "🚀🤖 Crawl4AI: Open-source LLM Friendly Web Crawler & Scraper. Don't be shy, join here: https://discord.gg/jP8KfhDhyN"
+    },
+    {
+      "type": "features",
+      "dur": 192,
+      "eyebrow": "highlights",
+      "items": [
+        {
+          "label": "🚀 Quick Start"
+        },
+        {
+          "label": "💖 Support Crawl4AI"
+        },
+        {
+          "label": "🤝 Sponsorship Tiers"
+        }
+      ],
+      "narration": "Highlights: 🚀 Quick Start; 💖 Support Crawl4AI; 🤝 Sponsorship Tiers."
+    },
+    {
+      "type": "steps",
+      "dur": 70,
+      "eyebrow": "built with",
+      "steps": [
+        "Python"
+      ],
+      "narration": "Built with Python."
+    },
+    {
+      "type": "code",
+      "dur": 150,
+      "eyebrow": "get started",
+      "filename": "terminal",
+      "lines": [
+        "pip install -U crawl4ai",
+        "pip install crawl4ai --pre",
+        "python -m playwright install --with-deps chromium"
+      ],
+      "narration": "Getting started takes a few commands."
+    },
+    {
+      "type": "bullets",
+      "dur": 190,
+      "eyebrow": "key points",
+      "title": "What matters",
+      "points": [
+        "LLM ready output, smart Markdown with headings, tables, code, citation hints",
+        "Fast in practice, async browser pool, caching, minimal hops",
+        "Full control, sessions, proxies, cookies, user scripts, hooks",
+        "Adaptive intelligence, learns site patterns, explores only what matters",
+        "Deploy anywhere, zero keys, CLI and Docker, cloud friendly"
+      ],
+      "narration": "The key points at a glance."
+    },
+    {
+      "type": "cta",
+      "dur": 90,
+      "title": "Star it on GitHub",
+      "sub": "https://github.com/unclecode/crawl4ai",
+      "narration": "Star it on GitHub."
+    }
+  ]
+}

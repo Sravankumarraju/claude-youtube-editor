@@ -1,0 +1,61 @@
+{
+  "type": "github",
+  "url": "https://github.com/tirth8205/code-review-graph",
+  "title": "code-review-graph",
+  "summary": "Local-first code intelligence graph for MCP and CLI. Builds a persistent map of your codebase so AI coding tools read only what matters, with benchmarked context reductions on reviews and large-repo workflows.",
+  "key_points": [
+    "uses: actions/checkout@v7",
+    "uses: tirth8205/code-review-graph@v2.3.6"
+  ],
+  "features": [
+    "Quick Start",
+    "How It Works",
+    "Blast-radius analysis",
+    "Incremental updates in < 2 seconds",
+    "The monorepo problem, solved",
+    "Broad language coverage + Jupyter notebooks"
+  ],
+  "tech_stack": [
+    "Python",
+    "ai-coding",
+    "claude",
+    "claude-code",
+    "code-review",
+    "graphrag",
+    "incremental",
+    "knowledge-graph"
+  ],
+  "steps": [],
+  "code_snippets": [
+    {
+      "filename": "example",
+      "lines": [
+        "pip install code-review-graph                     # or: pipx install code-review-graph",
+        "code-review-graph install          # auto-detects and configures all supported platforms",
+        "code-review-graph build            # parse your codebase"
+      ]
+    }
+  ],
+  "structure": [
+    "AGENTS.md",
+    "CHANGELOG.md",
+    "CLAUDE.md",
+    "CODE_OF_CONDUCT.md",
+    "CONTRIBUTING.md",
+    "GEMINI.md",
+    "LICENSE",
+    "README.hi-IN.md",
+    "README.ja-JP.md",
+    "README.ko-KR.md",
+    "README.md",
+    "README.zh-CN.md"
+  ],
+  "images": [
+    "https://github.com/tirth8205/code-review-graph"
+  ],
+  "stars": 24929,
+  "missing": [
+    "no install/usage commands detected"
+  ],
+  "raw_excerpt": "<h1 align=\"center\" code-review-graph</h1 <a href=\" target=\" blank\" rel=\"noopener noreferrer\" <img src=\" alt=\"tirth8205%2Fcode-review-graph | Trendshift\" width=\"250\" height=\"55\"/ </a <p align=\"center\" <strong Stop burning tokens. Start reviewing smarter.</strong </p <p align=\"center\" <a href=\"README.md\" English</a | <a href=\"README.zh-CN.md\" 简体中文</a | <a href=\"README.ja-JP.md\" 日本語</a | <a href=\"README.ko-KR.md\" 한국어</a | <a href=\"README.hi-IN.md\" हिन्दी</a </p <p align=\"center\" <a href=\" src=\" alt=\"PyPI\" </a <a href=\" src=\" alt=\"Downloads\" </a <a href=\" src=\" alt=\"Stars\" </a <a href=\" src=\" alt="
+}

@@ -1,0 +1,64 @@
+{
+  "type": "github",
+  "url": "https://github.com/unclecode/crawl4ai",
+  "title": "crawl4ai",
+  "summary": "🚀🤖 Crawl4AI: Open-source LLM Friendly Web Crawler & Scraper. Don't be shy, join here: https://discord.gg/jP8KfhDhyN",
+  "key_points": [
+    "LLM ready output, smart Markdown with headings, tables, code, citation hints",
+    "Fast in practice, async browser pool, caching, minimal hops",
+    "Full control, sessions, proxies, cookies, user scripts, hooks",
+    "Adaptive intelligence, learns site patterns, explores only what matters",
+    "Deploy anywhere, zero keys, CLI and Docker, cloud friendly"
+  ],
+  "features": [
+    "🚀 Quick Start",
+    "💖 Support Crawl4AI",
+    "🤝 Sponsorship Tiers",
+    "✨ Features",
+    "Try it Now!",
+    "Installation 🛠️"
+  ],
+  "tech_stack": [
+    "Python"
+  ],
+  "steps": [
+    "pip install -U crawl4ai",
+    "pip install crawl4ai --pre",
+    "python -m playwright install --with-deps chromium"
+  ],
+  "code_snippets": [
+    {
+      "filename": "example",
+      "lines": [
+        "# Install the package",
+        "pip install -U crawl4ai",
+        "# For pre release versions",
+        "pip install crawl4ai --pre",
+        "# Run post-installation setup",
+        "crawl4ai-setup",
+        "# Verify your installation",
+        "crawl4ai-doctor"
+      ]
+    }
+  ],
+  "structure": [
+    "CHANGELOG.md",
+    "CODE_OF_CONDUCT.md",
+    "CONTRIBUTING.md",
+    "CONTRIBUTORS.md",
+    "Dockerfile",
+    "JOURNAL.md",
+    "LICENSE",
+    "MANIFEST.in",
+    "MISSION.md",
+    "PROGRESSIVE_CRAWLING.md",
+    "README-first.md",
+    "README.md"
+  ],
+  "images": [
+    "https://github.com/unclecode/crawl4ai"
+  ],
+  "stars": 73976,
+  "missing": [],
+  "raw_excerpt": "🚀🤖 Crawl4AI: Open-source LLM Friendly Web Crawler & Scraper. <div align=\"center\" <a href=\" target=\" blank\" <img src=\" alt=\"unclecode%2Fcrawl4ai | Trendshift\" style=\"width: 250px; height: 55px;\" width=\"250\" height=\"55\"/ </a GitHub Stars GitHub Forks PyPI version Python Version Downloads GitHub Sponsors --- 🚀 Crawl4AI Cloud API — Closed Beta Launching Soon Reliable, large-scale web extraction, now built to be drastically more cost-effective than any of the existing solutions. 👉 Apply here for early access We’ll be onboarding in phases and working closely with early users. Limited slots. --- <p a"
+}

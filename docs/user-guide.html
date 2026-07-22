@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>claude-youtube-editor — User Guide</title>
+<style>
+  :root{
+    --bg:#f5f6fb; --surface:#ffffff; --surface-2:#eef0f7; --ink:#14161c;
+    --muted:#5b6274; --line:#e2e5ef; --accent:#5457e8; --accent-2:#8b5cf6;
+    --teal:#0d7d70; --amber:#a55a0a; --danger:#b4243a;
+    --code-bg:#14161f; --code-ink:#e7e9f2; --code-dim:#8b90a6; --code-accent:#a5a8ff;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,"Cascadia Code","SF Mono",Menlo,Consolas,monospace;
+    --maxw:1120px; --radius:14px;
+    --shadow:0 1px 2px rgba(20,22,28,.04),0 8px 30px rgba(20,22,28,.06);
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0c0e15; --surface:#141722; --surface-2:#1b1f2c; --ink:#ecedf5;
+      --muted:#99a0b6; --line:#262b3a; --accent:#7d80f6; --accent-2:#a78bfa;
+      --teal:#2dd4bf; --amber:#f6b13c; --danger:#f2647a;
+      --code-bg:#090a10; --code-ink:#e7e9f2; --code-dim:#7a8099; --code-accent:#b6b8ff;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 34px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#f5f6fb; --surface:#ffffff; --surface-2:#eef0f7; --ink:#14161c;
+    --muted:#5b6274; --line:#e2e5ef; --accent:#5457e8; --accent-2:#8b5cf6;
+    --teal:#0d7d70; --amber:#a55a0a; --danger:#b4243a;
+    --code-bg:#14161f; --code-ink:#e7e9f2; --code-dim:#8b90a6; --code-accent:#a5a8ff;
+    --shadow:0 1px 2px rgba(20,22,28,.04),0 8px 30px rgba(20,22,28,.06);
+  }
+  :root[data-theme="dark"]{
+    --bg:#0c0e15; --surface:#141722; --surface-2:#1b1f2c; --ink:#ecedf5;
+    --muted:#99a0b6; --line:#262b3a; --accent:#7d80f6; --accent-2:#a78bfa;
+    --teal:#2dd4bf; --amber:#f6b13c; --danger:#f2647a;
+    --code-bg:#090a10; --code-ink:#e7e9f2; --code-dim:#7a8099; --code-accent:#b6b8ff;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 34px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  code,kbd{font-family:var(--mono);font-size:.88em}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(18px,4vw,40px)}
+
+  /* Header */
+  header.top{position:sticky;top:0;z-index:20;backdrop-filter:blur(10px);
+    background:color-mix(in srgb,var(--bg) 82%,transparent);border-bottom:1px solid var(--line)}
+  .top-inner{display:flex;align-items:center;gap:14px;height:60px}
+  .brandmark{display:flex;align-items:center;gap:10px;font-weight:640;letter-spacing:-.01em}
+  .brandmark .dot{width:22px;height:22px;border-radius:7px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));flex:0 0 auto;
+    box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 40%,transparent)}
+  .brandmark small{font-family:var(--mono);font-weight:500;color:var(--muted);font-size:12px}
+  .spacer{flex:1}
+  .themebtn{font-family:var(--mono);font-size:12px;color:var(--muted);background:var(--surface-2);
+    border:1px solid var(--line);border-radius:99px;padding:6px 12px;cursor:pointer}
+  .themebtn:hover{color:var(--ink)}
+
+  /* Hero */
+  .hero{padding:clamp(44px,7vw,84px) 0 clamp(30px,4vw,44px)}
+  .eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);margin:0 0 18px}
+  h1{font-size:clamp(30px,5.4vw,54px);line-height:1.04;letter-spacing:-.025em;margin:0;
+    font-weight:680;text-wrap:balance;max-width:16ch}
+  h1 .g{background:linear-gradient(120deg,var(--accent),var(--accent-2));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .lede{font-size:clamp(17px,2vw,20px);color:var(--muted);max-width:60ch;margin:20px 0 0;text-wrap:pretty}
+  .chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+  .chip{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:12.5px;
+    padding:6px 12px;border-radius:99px;border:1px solid var(--line);background:var(--surface)}
+  .chip b{font-weight:600}
+  .chip .ok{color:var(--teal)} .chip .warn{color:var(--amber)}
+  .tick{width:7px;height:7px;border-radius:50%;background:var(--teal)}
+  .tick.w{background:var(--amber)}
+
+  /* Layout: sticky nav + content */
+  .layout{display:grid;grid-template-columns:1fr;gap:36px;padding-bottom:80px}
+  @media(min-width:1000px){.layout{grid-template-columns:212px 1fr;gap:52px}}
+  nav.toc{align-self:start}
+  @media(min-width:1000px){nav.toc{position:sticky;top:80px}}
+  nav.toc ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;
+    counter-reset:s}
+  nav.toc a{display:block;padding:7px 12px;border-radius:8px;color:var(--muted);font-size:14px;
+    border-left:2px solid transparent}
+  nav.toc a:hover{background:var(--surface-2);text-decoration:none;color:var(--ink)}
+  nav.toc a.active{color:var(--ink);background:var(--surface-2);border-left-color:var(--accent)}
+  @media(max-width:999px){
+    nav.toc{overflow-x:auto;border-bottom:1px solid var(--line);padding-bottom:8px}
+    nav.toc ol{flex-direction:row;gap:4px}
+    nav.toc a{white-space:nowrap;border-left:none;border-bottom:2px solid transparent}
+    nav.toc a.active{border-left:none;border-bottom-color:var(--accent)}
+  }
+
+  section{padding-top:14px;margin-bottom:52px;scroll-margin-top:78px}
+  h2{font-size:clamp(21px,2.6vw,27px);letter-spacing:-.02em;margin:0 0 6px;font-weight:640;
+    display:flex;align-items:baseline;gap:12px;text-wrap:balance}
+  h2 .n{font-family:var(--mono);font-size:14px;color:var(--accent);font-weight:600}
+  h3{font-size:16.5px;margin:26px 0 8px;letter-spacing:-.01em}
+  p{margin:10px 0}
+  .muted{color:var(--muted)}
+  section > p:first-of-type{margin-top:4px}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:20px 22px;box-shadow:var(--shadow)}
+  .grid2{display:grid;gap:16px}
+  @media(min-width:640px){.grid2{grid-template-columns:1fr 1fr}}
+
+  /* code */
+  pre{background:var(--code-bg);color:var(--code-ink);border-radius:12px;padding:16px 18px;
+    overflow-x:auto;margin:12px 0;border:1px solid color-mix(in srgb,var(--code-bg) 70%,#fff 8%);
+    font-size:13.5px;line-height:1.7}
+  pre code{font-family:var(--mono);font-size:inherit}
+  .cmt{color:var(--code-dim)}
+  .cmd{color:var(--code-accent)}
+  p code,li code,td code{background:var(--surface-2);border:1px solid var(--line);
+    padding:1px 6px;border-radius:6px;color:var(--ink)}
+
+  /* pipeline */
+  .pipe{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:20px 0 4px}
+  .stage{flex:1 1 120px;min-width:110px;background:var(--surface);border:1px solid var(--line);
+    border-radius:11px;padding:12px 13px;position:relative}
+  .stage .k{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.06em}
+  .stage .t{font-weight:600;font-size:14px;margin-top:3px}
+  .stage .d{font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.45}
+  .arrow{align-self:center;color:var(--muted);flex:0 0 auto;font-family:var(--mono)}
+  @media(max-width:620px){.arrow{transform:rotate(90deg)}}
+
+  /* steps */
+  .step{display:grid;grid-template-columns:auto 1fr;gap:18px;padding:20px 0;border-top:1px solid var(--line)}
+  .step:first-of-type{border-top:none}
+  .step .num{font-family:var(--mono);font-weight:640;font-size:15px;color:var(--bg);
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));width:34px;height:34px;
+    border-radius:9px;display:grid;place-items:center}
+  .step h3{margin:2px 0 2px}
+  .say{font-family:var(--mono);font-size:13px;background:var(--surface-2);border:1px solid var(--line);
+    border-radius:8px;padding:8px 12px;display:inline-block;margin:6px 0 2px}
+  .say::before{content:"you type › ";color:var(--muted)}
+
+  /* table */
+  .tbl{width:100%;border-collapse:collapse;font-size:14.5px;margin:8px 0}
+  .tbl th,.tbl td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  .tbl th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .tbl tr:last-child td{border-bottom:none}
+  .badge{font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:99px;white-space:nowrap;
+    border:1px solid transparent;font-weight:600}
+  .badge.req{color:var(--danger);background:color-mix(in srgb,var(--danger) 12%,transparent)}
+  .badge.opt{color:var(--muted);background:var(--surface-2);border-color:var(--line)}
+  .badge.free{color:var(--teal);background:color-mix(in srgb,var(--teal) 14%,transparent)}
+  .badge.paid{color:var(--amber);background:color-mix(in srgb,var(--amber) 14%,transparent)}
+
+  /* callout */
+  .note{border-left:3px solid var(--accent);background:var(--surface);border-radius:0 12px 12px 0;
+    padding:14px 18px;margin:16px 0;box-shadow:var(--shadow)}
+  .note.warn{border-left-color:var(--amber)}
+  .note .lbl{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--accent);font-weight:600}
+  .note.warn .lbl{color:var(--amber)}
+
+  ul.clean{margin:8px 0;padding-left:20px} ul.clean li{margin:5px 0}
+  .foot{border-top:1px solid var(--line);padding:26px 0 60px;color:var(--muted);font-size:13.5px}
+  .kbd{font-family:var(--mono);font-size:12px;background:var(--surface-2);border:1px solid var(--line);
+    border-bottom-width:2px;border-radius:6px;padding:1px 7px}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-inner">
+    <span class="brandmark"><span class="dot" aria-hidden="true"></span> claude&#8209;youtube&#8209;editor <small>user guide</small></span>
+    <span class="spacer"></span>
+    <button class="themebtn" id="theme" type="button">◐ theme</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <p class="eyebrow">Terminal-driven video editing</p>
+    <h1>You record the talking head. <span class="g">Claude Code does the rest.</span></h1>
+    <p class="lede">This isn't an app you click through. You drop a recording into the project and talk to
+      Claude Code in your terminal — it cuts the footage, builds animated on-screen visuals as code,
+      cleans your voice, places sound effects, and packages the result. This guide is the shortest path
+      from an empty project to a rendered video.</p>
+    <div class="chips">
+      <span class="chip"><span class="tick"></span> ffmpeg <b class="ok">installed</b></span>
+      <span class="chip"><span class="tick"></span> Python venv <b class="ok">ready</b></span>
+      <span class="chip"><span class="tick"></span> Remotion <b class="ok">38 shots</b></span>
+      <span class="chip"><span class="tick w"></span> API keys <b class="warn">add yours</b></span>
+    </div>
+  </div>
+
+  <div class="layout">
+    <nav class="toc" aria-label="Contents">
+      <ol>
+        <li><a href="#start">See it work now</a></li>
+        <li><a href="#model">How it works</a></li>
+        <li><a href="#pipeline">The 6-step pipeline</a></li>
+        <li><a href="#twoways">Two ways to begin</a></li>
+        <li><a href="#keys">API keys</a></li>
+        <li><a href="#cheat">Command cheat sheet</a></li>
+        <li><a href="#trouble">Troubleshooting</a></li>
+        <li><a href="#layout">Where things live</a></li>
+        <li><a href="#module1">Module 1 status</a></li>
+      </ol>
+    </nav>
+
+    <main>
+      <section id="start">
+        <h2><span class="n">00</span> See it work right now — free, no footage</h2>
+        <p>Before recording anything, watch the visual engine run. From the repo root:</p>
+        <pre><code><span class="cmt"># from D:\Projects\Claude Projects\video-edit</span>
+<span class="cmd">cd</span> remotion
+<span class="cmd">npm</span> run studio</code></pre>
+        <p>Open <a href="http://localhost:3000">http://localhost:3000</a> in Chrome or Edge. You'll see
+          <b>38 example shots</b> from a real published video — click any to play it. Every one renders
+          from code with no camera and no API key. This is what "visuals built as code" means, and it's
+          the fastest way to understand what the tool produces.</p>
+      </section>
+
+      <section id="model">
+        <h2><span class="n">01</span> How it works</h2>
+        <p>Three moving parts, and you only ever touch the first one directly:</p>
+        <div class="grid2">
+          <div class="card">
+            <h3 style="margin-top:0">You + Claude Code</h3>
+            <p class="muted" style="margin:0">You type plain requests in the terminal (<code>clean cut
+              videos/video-1</code>). Claude picks the matching <em>skill</em> and runs the tools for you.
+              There is no dashboard — the conversation <em>is</em> the interface.</p>
+          </div>
+          <div class="card">
+            <h3 style="margin-top:0">Python tools</h3>
+            <p class="muted" style="margin:0">The real work — transcription, cutting, denoising, sound
+              design, thumbnails — happens in <code>tools/*.py</code>, using the project's
+              <code>venv</code> and <code>ffmpeg</code>.</p>
+          </div>
+          <div class="card">
+            <h3 style="margin-top:0">Remotion (visuals)</h3>
+            <p class="muted" style="margin:0">On-screen animations — title cards, code, fake screencasts,
+              diagrams — are React/TSX "shots" in <code>remotion/</code>, rendered and composited over
+              your cut.</p>
+          </div>
+          <div class="card">
+            <h3 style="margin-top:0">One rule</h3>
+            <p class="muted" style="margin:0">Run <b>every</b> command from the repo root, and use the
+              venv Python (<code>venv/Scripts/python</code> on Windows) — not a bare <code>python</code>.</p>
+          </div>
+        </div>
+        <div class="note">
+          <div class="lbl">Do this once, first</div>
+          <p style="margin:6px 0 0">Run <code>/brand-setup</code> (or say "set up my brand"). It asks for
+            your colors, fonts, and wordmark, then rewrites the three style files together so your videos
+            look like <em>your</em> channel instead of the demo's. Skip it and everything comes out in the
+            house style.</p>
+        </div>
+      </section>
+
+      <section id="pipeline">
+        <h2><span class="n">02</span> The 6-step pipeline</h2>
+        <p>Each step hands its output to the next, in this fixed order:</p>
+        <div class="pipe">
+          <div class="stage"><div class="k">1 · cut</div><div class="t">Clean cut</div><div class="d">trim fillers &amp; retakes</div></div>
+          <div class="arrow">→</div>
+          <div class="stage"><div class="k">2 · visuals</div><div class="t">TSX beats</div><div class="d">animated overlays</div></div>
+          <div class="arrow">→</div>
+          <div class="stage"><div class="k">3 · voice</div><div class="t">Clean audio</div><div class="d">isolate the voice</div></div>
+          <div class="arrow">→</div>
+          <div class="stage"><div class="k">4 · sfx</div><div class="t">Sound design</div><div class="d">cue the effects</div></div>
+          <div class="arrow">→</div>
+          <div class="stage"><div class="k">5 · pack</div><div class="t">Packaging</div><div class="d">title + thumbnails</div></div>
+          <div class="arrow">→</div>
+          <div class="stage"><div class="k">6 · ship</div><div class="t">Upload</div><div class="d">private draft</div></div>
+        </div>
+
+        <div class="step"><div class="num">1</div><div>
+          <h3>Clean cut — get this right before anything else</h3>
+          <span class="say">clean cut videos/video-1</span>
+          <p class="muted">AssemblyAI transcribes your footage; Claude reads the transcript and decides
+            what's a real point versus a false start or filler, writing a clean master plus
+            <code>edited-transcript.json</code> — the word-by-word timing map every later step depends on.
+            A bad cut fails downstream silently, so review it in the cut editor before moving on.</p>
+        </div></div>
+
+        <div class="step"><div class="num">2</div><div>
+          <h3>Visual beats</h3>
+          <span class="say">add TSX beats to video-1</span>
+          <p class="muted">Builds animated overlays and full-screen segments synced to your word times.
+            The <code>/fake-screencast</code> technique turns static screenshots into a simulated screen
+            recording — animated cursor, changing URL bar, scrolling — so you never open a screen recorder.</p>
+        </div></div>
+
+        <div class="step"><div class="num">3</div><div>
+          <h3>Clean the voice</h3>
+          <span class="say">clean audio for video-1</span>
+          <p class="muted">Diagnoses the noise and isolates your voice while preserving your levels. This is
+            the one step with a free local option (RNNoise) if you'd rather not pay for ElevenLabs.</p>
+        </div></div>
+
+        <div class="step"><div class="num">4</div><div>
+          <h3>Sound effects</h3>
+          <span class="say">suggest sfx for video-1</span>
+          <p class="muted">Plans each cue on an exact word into <code>sfx-plan.json</code>. There's a hard
+            stop: it won't mix until you audit the cue sheet.</p>
+        </div></div>
+
+        <div class="step"><div class="num">5</div><div>
+          <h3>Packaging</h3>
+          <span class="say">package this video</span>
+          <p class="muted">Produces one locked title plus three thumbnail bets for YouTube's built-in A/B
+            test. Face thumbnails need your own reference photos in <code>media/library/faces/</code>.</p>
+        </div></div>
+
+        <div class="step"><div class="num">6</div><div>
+          <h3>Verify, then upload</h3>
+          <pre><code><span class="cmd">venv/Scripts/python</span> tools/verify_cut.py videos/video-1   <span class="cmt"># half-cut words + A/V drift</span>
+<span class="cmd">venv/Scripts/python</span> tools/yt_upload.py auth              <span class="cmt"># one-time browser login</span>
+<span class="cmd">venv/Scripts/python</span> tools/yt_upload.py upload &lt;plan.json&gt;</code></pre>
+          <p class="muted">It uploads as a <b>private draft</b>, so you review before anything goes live.</p>
+        </div></div>
+      </section>
+
+      <section id="twoways">
+        <h2><span class="n">03</span> Two ways to begin</h2>
+        <div class="grid2">
+          <div class="card">
+            <h3 style="margin-top:0">Edit existing footage</h3>
+            <p class="muted">You already have a talking-head recording, voiceover, screen recording, or
+              demo. Drop the file into <code>videos/video-1/</code> and run the pipeline above starting at
+              step&nbsp;1. This is the tool's core, working path today.</p>
+          </div>
+          <div class="card">
+            <h3 style="margin-top:0">Faceless from a source</h3>
+            <p class="muted">Turn a public GitHub repo, an article URL, or pasted text into an animated
+              video with no camera — assembled from the same Remotion visuals. This is the
+              <b>Module&nbsp;1</b> capability now being built (see the status section); today it's driven
+              by Claude rather than a one-click button.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="keys">
+        <h2><span class="n">04</span> API keys</h2>
+        <p>Paste these into the <code>.env</code> file at the repo root (already created for you). They run
+          on your own paid accounts — nothing is billed through this tool.</p>
+        <div style="overflow-x:auto">
+        <table class="tbl">
+          <thead><tr><th>Key</th><th>Unlocks</th><th>Needed?</th><th>Cost</th><th>Get it</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code>ASSEMBLYAI_API_KEY</code></td>
+              <td>Transcription — the cut step (1). Nothing real works without it.</td>
+              <td><span class="badge req">required</span></td>
+              <td><span class="badge free">free tier</span></td>
+              <td><a href="https://www.assemblyai.com">assemblyai.com</a></td>
+            </tr>
+            <tr>
+              <td><code>ELEVENLABS_API_KEY</code></td>
+              <td>Voice isolation, sound effects, music (steps 3–4).</td>
+              <td><span class="badge opt">recommended</span></td>
+              <td><span class="badge paid">paid</span></td>
+              <td><a href="https://elevenlabs.io">elevenlabs.io</a></td>
+            </tr>
+            <tr>
+              <td><code>GEMINI_API_KEY</code></td>
+              <td>Thumbnail generation (step 5).</td>
+              <td><span class="badge opt">optional</span></td>
+              <td><span class="badge paid">paid</span></td>
+              <td><a href="https://ai.google.dev">ai.google.dev</a></td>
+            </tr>
+            <tr>
+              <td>YouTube <span class="muted">(OAuth, not a key)</span></td>
+              <td>Uploading the finished draft (step 6).</td>
+              <td><span class="badge opt">optional</span></td>
+              <td><span class="badge free">free</span></td>
+              <td><code>tools/yt_upload_SETUP.md</code></td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="note">
+          <div class="lbl">Minimum to start</div>
+          <p style="margin:6px 0 0">Just <b>AssemblyAI</b> (free tier). ElevenLabs makes it sound
+            professional but has a free local fallback for voice; Gemini and YouTube are only for the end.</p>
+        </div>
+      </section>
+
+      <section id="cheat">
+        <h2><span class="n">05</span> Command cheat sheet</h2>
+        <p class="muted">Talk to Claude in plain language for the pipeline; the raw commands below are for
+          the demo, setup, and manual steps. Always from the repo root.</p>
+        <pre><code><span class="cmt"># see the visual engine (no footage, no keys)</span>
+<span class="cmd">cd</span> remotion &amp;&amp; <span class="cmd">npm</span> run studio        <span class="cmt"># → http://localhost:3000</span>
+
+<span class="cmt"># after adding or renaming a Remotion shot, regenerate the registry</span>
+<span class="cmd">cd</span> remotion &amp;&amp; <span class="cmd">npm</span> run gen
+
+<span class="cmt"># render the example shots to video files</span>
+<span class="cmd">cd</span> remotion &amp;&amp; <span class="cmd">npm</span> run render
+
+<span class="cmt"># type-check the Remotion project (the only quality gate that exists)</span>
+<span class="cmd">cd</span> remotion &amp;&amp; <span class="cmd">npx</span> tsc --noEmit
+
+<span class="cmt"># open the cut editor for a project (the review gate in step 1)</span>
+<span class="cmd">venv/Scripts/python</span> tools/editor/server.py videos/video-1   <span class="cmt"># → http://localhost:8765</span></code></pre>
+        <p class="muted">In Claude Code, the plain-language equivalents: <code>set up my brand</code> ·
+          <code>clean cut videos/video-1</code> · <code>add TSX beats to video-1</code> ·
+          <code>clean audio for video-1</code> · <code>suggest sfx for video-1</code> ·
+          <code>package this video</code>.</p>
+      </section>
+
+      <section id="trouble">
+        <h2><span class="n">06</span> Troubleshooting</h2>
+
+        <h3><code>ffmpeg: command not found</code></h3>
+        <p class="muted">ffmpeg was just added to your PATH — <b>restart your terminal (and Claude Code)</b>
+          so it's picked up. New windows will find it. The Studio demo doesn't need ffmpeg, so it works
+          regardless.</p>
+
+        <h3><code>ModuleNotFoundError</code> (requests, Pillow, google-…)</h3>
+        <p class="muted">You ran a bare <code>python</code> that isn't the project venv. Use
+          <code>venv/Scripts/python tools/&lt;tool&gt;.py …</code> (Windows) or activate the venv first.</p>
+
+        <div class="note warn">
+          <div class="lbl">Known limitation — GPU required for the cut render</div>
+          <p style="margin:6px 0 0">The final cut render (<code>render_cuts.py</code>) currently hard-requires
+            an <b>NVIDIA GPU</b> (NVENC) with no CPU fallback — it fails on most laptops and all Macs. The
+            visuals bake (<code>bake.py</code>) uses the CPU and works anywhere. A CPU fallback for the cut
+            render is the first fix queued in Module&nbsp;1 (see below).</p>
+        </div>
+
+        <h3>Paths and projects</h3>
+        <p class="muted">Pass projects as <code>videos/video-1</code> and run from the repo root — tools
+          resolve project paths against your working directory. Raw footage and master cuts are
+          intentionally kept out of git.</p>
+      </section>
+
+      <section id="layout">
+        <h2><span class="n">07</span> Where things live</h2>
+        <pre><code>tools/       <span class="cmt"># Python pipeline tools + the cut-editor UI (tools/editor/)</span>
+remotion/    <span class="cmt"># the visual engine — src/lib/ kit, src/shots/&lt;project&gt;/</span>
+media/       <span class="cmt"># library/ (reusable sfx, music, faces) + projects/&lt;project&gt;/</span>
+videos/      <span class="cmt"># one folder per video — starts empty; drop footage here</span>
+brand.md     <span class="cmt"># the style contract (with remotion/src/brand.ts + fonts.ts)</span>
+.env         <span class="cmt"># your API keys (never committed)</span></code></pre>
+      </section>
+
+      <section id="module1">
+        <h2><span class="n">08</span> Module 1 status</h2>
+        <p>The project is being upgraded incrementally. The current focus is making footage editing easier
+          and adding a first version of <b>faceless video from a source</b> (GitHub repo, article, or
+          pasted text). A full audit of the existing code — architecture, reusable components, and the
+          honest gaps — lives in <code>MODULE_1_AUDIT.md</code>, with step tracking in
+          <code>MODULE_1_PROGRESS.md</code>.</p>
+        <p class="muted">Headline from the audit: this is a CLI + Claude-skills pipeline, not a web app, so
+          the faceless feature is being built CLI-first and reuses the existing Remotion components rather
+          than rebuilding them.</p>
+      </section>
+    </main>
+  </div>
+</div>
+
+<div class="wrap foot">
+  <p>claude-youtube-editor — local user guide · generated for this project. Open
+    <code>docs/user-guide.html</code> anytime, or press <span class="kbd">◐ theme</span> to switch light/dark.</p>
+</div>
+
+<script>
+  (function(){
+    var root=document.documentElement, btn=document.getElementById('theme');
+    function cur(){return root.getAttribute('data-theme') ||
+      (matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');}
+    btn.addEventListener('click',function(){
+      root.setAttribute('data-theme', cur()==='dark'?'light':'dark');
+    });
+    // Scrollspy for the TOC
+    var links=[].slice.call(document.querySelectorAll('nav.toc a'));
+    var map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a;});
+    var obs=new IntersectionObserver(function(ents){
+      ents.forEach(function(e){
+        if(e.isIntersecting){
+          links.forEach(function(a){a.classList.remove('active');});
+          if(map[e.target.id])map[e.target.id].classList.add('active');
+        }
+      });
+    },{rootMargin:'-40% 0px -55% 0px'});
+    document.querySelectorAll('section[id]').forEach(function(s){obs.observe(s);});
+  })();
+</script>
+</body>
+</html>

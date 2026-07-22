@@ -1,0 +1,109 @@
+{
+  "_comment": "Video templates: colors + fonts + layout. Shared source of truth for the Remotion engine (src/templates.ts) and the Python generator (tools/gen_faceless.py). AI-generated templates (from a screenshot or prompt) append entries here with the same shape. Font keys must exist in src/lib/fontcatalog.ts. Layout.pacing scales every scene duration; layout.order lists preferred scene-type order; layout.captionsDefault seeds the UI toggle.",
+  "templates": [
+    {
+      "id": "brand",
+      "name": "Brand (default)",
+      "description": "The channel's house style — calm, premium, indigo→teal.",
+      "colors": {
+        "accent": "#6366F1",
+        "accent2": "#9b7cc4",
+        "signal": "#4db8a8",
+        "warn": "#f5d76e",
+        "danger": "#e8879f",
+        "ink": "#1a1a2e",
+        "muted": "#6b6b7b",
+        "paper": "#fffef7",
+        "cream": "#faf8f5",
+        "line": "#e7e3da",
+        "d900": "#0d1117",
+        "d800": "#161b22",
+        "d600": "#30363d",
+        "d400": "#8b949e",
+        "d300": "#c9d1d9"
+      },
+      "gradient": ["#6366F1", "#9b7cc4", "#4db8a8"],
+      "fonts": { "display": "SpaceGrotesk", "body": "Inter", "mono": "JetBrainsMono" },
+      "radius": { "card": 16, "panel": 14, "window": 10, "pill": 999 },
+      "layout": { "pacing": 1.0, "order": ["title", "statement", "features", "steps", "code", "bullets", "cta"], "captionsDefault": true }
+    },
+    {
+      "id": "midnight",
+      "name": "Midnight",
+      "description": "Dark, high-contrast, cyan glow — great for developer content.",
+      "colors": {
+        "accent": "#38bdf8",
+        "accent2": "#818cf8",
+        "signal": "#34d399",
+        "warn": "#fbbf24",
+        "danger": "#fb7185",
+        "ink": "#e8edf6",
+        "muted": "#94a3b8",
+        "paper": "#0b1120",
+        "cream": "#111a2e",
+        "line": "#1e293b",
+        "d900": "#020617",
+        "d800": "#0b1120",
+        "d600": "#334155",
+        "d400": "#94a3b8",
+        "d300": "#cbd5e1"
+      },
+      "gradient": ["#38bdf8", "#818cf8", "#34d399"],
+      "fonts": { "display": "Sora", "body": "Manrope", "mono": "JetBrainsMono" },
+      "radius": { "card": 18, "panel": 14, "window": 12, "pill": 999 },
+      "layout": { "pacing": 1.0, "order": ["title", "statement", "features", "code", "steps", "bullets", "cta"], "captionsDefault": true }
+    },
+    {
+      "id": "sunset",
+      "name": "Sunset",
+      "description": "Warm coral→amber on cream — friendly, energetic, lifestyle.",
+      "colors": {
+        "accent": "#f97316",
+        "accent2": "#ef4444",
+        "signal": "#e11d74",
+        "warn": "#f59e0b",
+        "danger": "#dc2626",
+        "ink": "#2a1a12",
+        "muted": "#8a6f5e",
+        "paper": "#fff8f0",
+        "cream": "#fdeee0",
+        "line": "#f0dcc6",
+        "d900": "#1c1310",
+        "d800": "#2a1e18",
+        "d600": "#4a382e",
+        "d400": "#a68a76",
+        "d300": "#e4d3c4"
+      },
+      "gradient": ["#f97316", "#ef4444", "#e11d74"],
+      "fonts": { "display": "Poppins", "body": "DMSans", "mono": "IBMPlexMono" },
+      "radius": { "card": 22, "panel": 16, "window": 12, "pill": 999 },
+      "layout": { "pacing": 1.05, "order": ["title", "statement", "features", "bullets", "steps", "code", "cta"], "captionsDefault": true }
+    },
+    {
+      "id": "editorial",
+      "name": "Editorial",
+      "description": "Serif display on off-white — calm, authoritative, article-style.",
+      "colors": {
+        "accent": "#0f766e",
+        "accent2": "#7c3aed",
+        "signal": "#0d9488",
+        "warn": "#ca8a04",
+        "danger": "#be123c",
+        "ink": "#1c1917",
+        "muted": "#78716c",
+        "paper": "#faf9f6",
+        "cream": "#f3f1ea",
+        "line": "#e4e0d6",
+        "d900": "#1c1917",
+        "d800": "#292524",
+        "d600": "#44403c",
+        "d400": "#a8a29e",
+        "d300": "#e7e5e4"
+      },
+      "gradient": ["#0f766e", "#7c3aed", "#0d9488"],
+      "fonts": { "display": "Fraunces", "body": "Inter", "mono": "IBMPlexMono" },
+      "radius": { "card": 12, "panel": 10, "window": 8, "pill": 999 },
+      "layout": { "pacing": 1.1, "order": ["title", "statement", "bullets", "features", "code", "steps", "cta"], "captionsDefault": true }
+    }
+  ]
+}

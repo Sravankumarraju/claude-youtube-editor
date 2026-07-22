@@ -1,0 +1,58 @@
+{
+  "type": "github",
+  "url": "https://github.com/Sravankumarraju/claude-youtube-editor",
+  "title": "claude-youtube-editor",
+  "summary": "claude-youtube-editor Record the talking head. Claude Code does the rest.",
+  "key_points": [
+    "Transitions — a proper transition library between beats",
+    "Effects — zoom/punch-in, highlight, spotlight passes",
+    "Filters — grade/look presets that respect the brand contract",
+    "No script writer. This edits video; it doesn't write it.",
+    "No footage. The example's shots ship, its raw recording doesn't videos/ starts empty."
+  ],
+  "features": [
+    "The six steps",
+    "What you record vs what it builds",
+    "Quickstart",
+    "See it before you shoot anything",
+    "Make it yours",
+    "What it costs (the honest part)"
+  ],
+  "tech_stack": [],
+  "steps": [
+    "cd claude-youtube-editor",
+    "python -m venv venv",
+    "cd remotion && npm run studio"
+  ],
+  "code_snippets": [
+    {
+      "filename": "example",
+      "lines": [
+        "git clone https://github.com/hassancs91/claude-youtube-editor",
+        "cd claude-youtube-editor",
+        "python -m venv venv",
+        "venv/Scripts/python -m pip install -r requirements.txt   # Windows (./venv/bin/pip on macOS/Linux)",
+        "cd remotion && npm install && npm run gen && cd ..       # build the Remotion registry",
+        "cp .env.example .env                                     # add your keys",
+        "claude                                                   # open in Claude Code, then:"
+      ]
+    }
+  ],
+  "structure": [
+    "CLAUDE.md",
+    "LICENSE",
+    "README.md",
+    "brand.md",
+    "media/",
+    "remotion/",
+    "requirements.txt",
+    "tools/",
+    "videos/"
+  ],
+  "images": [
+    "https://github.com/Sravankumarraju/claude-youtube-editor"
+  ],
+  "stars": 0,
+  "missing": [],
+  "raw_excerpt": "claude-youtube-editor Record the talking head. Claude Code does the rest. An open-source pipeline that takes a raw recording all the way to a published YouTube video — the cut, the visuals, the voice, the sound effects, the thumbnail, and the upload. No video editor. No screen recording. Every screen moment you see is built as code Remotion TSX and composited over your cut. 📺 Watch it edit a real video, end to end: < -- VIDEO URL -- That video was made with this repo. The animations, the screencasts, the sound effects, and the thumbnail you clicked — all of it. The six steps | | Step | Skill |"
+}

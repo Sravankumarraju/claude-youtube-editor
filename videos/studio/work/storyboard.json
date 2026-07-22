@@ -1,0 +1,90 @@
+{
+  "title": "code-review-graph",
+  "source_url": "https://github.com/tirth8205/code-review-graph",
+  "template": "brand",
+  "scenes": [
+    {
+      "type": "title",
+      "dur": 211,
+      "eyebrow": "open-source · github",
+      "title": "code-review-graph",
+      "subtitle": "Local-first code intelligence graph for MCP and CLI. Builds…",
+      "narration": "code-review-graph. Local-first code intelligence graph for MCP and CLI. Builds…",
+      "audio": "projects/studio/narration/00.mp3"
+    },
+    {
+      "type": "statement",
+      "dur": 322,
+      "eyebrow": "overview",
+      "text": "Local-first code intelligence graph for MCP and CLI. Builds a persistent map of your codebase so AI coding tools read only what matters, with benchmarked context reductions on reviews and large-repo workflows.",
+      "narration": "Local-first code intelligence graph for MCP and CLI. Builds a persistent map of your codebase so AI coding tools read only what matters, with benchmarked context reductions on reviews and large-repo workflows.",
+      "audio": "projects/studio/narration/01.mp3"
+    },
+    {
+      "type": "features",
+      "dur": 221,
+      "eyebrow": "highlights",
+      "items": [
+        {
+          "label": "Quick Start"
+        },
+        {
+          "label": "How It Works"
+        },
+        {
+          "label": "Blast-radius analysis"
+        }
+      ],
+      "narration": "Highlights: Quick Start; How It Works; Blast-radius analysis.",
+      "audio": "projects/studio/narration/02.mp3"
+    },
+    {
+      "type": "steps",
+      "dur": 231,
+      "eyebrow": "built with",
+      "steps": [
+        "Python",
+        "ai-coding",
+        "claude",
+        "claude-code",
+        "code-review",
+        "graphrag"
+      ],
+      "narration": "Built with Python, ai-coding, claude, claude-code, code-review, graphrag.",
+      "audio": "projects/studio/narration/03.mp3"
+    },
+    {
+      "type": "code",
+      "dur": 150,
+      "eyebrow": "example",
+      "filename": "example",
+      "lines": [
+        "pip install code-review-graph                     # or: pipx install code-review-graph",
+        "code-review-graph install          # auto-detects and configures all supported platforms",
+        "code-review-graph build            # parse your codebase"
+      ],
+      "narration": "Here is a quick example.",
+      "audio": "projects/studio/narration/04.mp3"
+    },
+    {
+      "type": "bullets",
+      "dur": 112,
+      "eyebrow": "key points",
+      "title": "What matters",
+      "points": [
+        "uses: actions/checkout@v7",
+        "uses: tirth8205/code-review-graph@v2.3.6"
+      ],
+      "narration": "The key points at a glance.",
+      "audio": "projects/studio/narration/05.mp3"
+    },
+    {
+      "type": "cta",
+      "dur": 91,
+      "title": "Star it on GitHub",
+      "sub": "https://github.com/tirth8205/code-review-graph",
+      "narration": "Star it on GitHub.",
+      "audio": "projects/studio/narration/06.mp3"
+    }
+  ]
+}

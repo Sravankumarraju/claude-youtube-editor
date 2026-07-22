@@ -1,0 +1,5 @@
+Acme CLI. A fast task runner for developers.
+
+- Runs tasks in parallel
+- Watches files and reruns
+- Zero config to start
