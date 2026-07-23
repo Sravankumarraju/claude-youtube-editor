@@ -18,6 +18,7 @@ Usage (repo root, venv python; needs ELEVENLABS_API_KEY in .env):
 """
 from __future__ import annotations
 import argparse
+import hashlib
 import json
 import math
 import shutil
@@ -136,6 +137,14 @@ def main() -> int:
         return 1
     print(f"voice: {voice_name} ({voice_id})  model: {args.model}")
 
+    # Cache by CONTENT hash, not just filename — the studio reuses one project,
+    # so a new script must not silently reuse the previous video's audio.
+    manifest_path = ndir / "_manifest.json"
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.exists() else {}
+    except Exception:
+        manifest = {}
+
     made = 0
     for i, s in enumerate(scenes):
         # Strip emoji so the voice never tries to speak pictographs, and so the
@@ -144,9 +153,12 @@ def main() -> int:
         if not text:
             continue
         mp3 = ndir / f"{i:02d}.mp3"
+        sig = hashlib.sha1(f"{voice_id}|{args.model}|{args.speed}|{text}".encode("utf-8")).hexdigest()
+        fresh = mp3.exists() and manifest.get(str(i)) == sig
         try:
-            if args.force or not mp3.exists():
+            if args.force or not fresh:
                 tts(key, voice_id, text, args.model, args.speed, mp3)
+                manifest[str(i)] = sig
                 made += 1
             secs = audio_seconds(mp3)
         except Exception as e:  # noqa: BLE001
@@ -158,6 +170,7 @@ def main() -> int:
         s["audio"] = f"projects/{name}/narration/{i:02d}.mp3"
         print(f"  scene {i:2d} [{s['type']:9}] {secs:4.1f}s -> {s['dur']:4d}f  \"{text[:52]}\"")
 
+    manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     sb_path.write_text(json.dumps(sb, indent=2, ensure_ascii=False), encoding="utf-8")
     total_s = sum(s["dur"] for s in scenes) / FPS
     print(f"\nOK  {made} clip(s) generated -> {ndir.as_posix()}")

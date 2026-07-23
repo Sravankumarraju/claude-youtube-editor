@@ -1,0 +1,28 @@
+{
+  "id": "global-nervous-system",
+  "name": "Planetary Signal Network",
+  "premise": "Treat the entire planet as a single organism transmitting live data streams into an AI brain.",
+  "hook": "Right now, 500 news feeds, 29 stock markets, and escalation signals are firing at once—this AI connects every single node.",
+  "metaphor": "Earth's Digital Central Nervous System",
+  "mood": [
+    "cinematic",
+    "analytical",
+    "futuristic"
+  ],
+  "palette": {
+    "bg": "#05050a",
+    "accent": "#7928ca",
+    "accent2": "#00dfa2"
+  },
+  "motif": "Luminescent data pulses travelling across a 3D globe.gl model",
+  "sections": [
+    "The Planetary Noise Problem",
+    "Wiring 500 News Streams",
+    "Constructing the 3D Globe",
+    "Correlating Disaster and Market Signals",
+    "Plugging into Model Context Protocol",
+    "Synthesizing Raw Noise into Briefs",
+    "Reading the Live Planet"
+  ],
+  "why_it_fits": "Leverages the 500 curated feeds, 15 categories, 3D globe visualization, and cross-stream correlation capabilities."
+}

@@ -1,0 +1,593 @@
+{
+ "id": "64ad19d7-f4c9-4397-99ee-04b4a4cfc60c",
+ "language_model": "assemblyai_default",
+ "acoustic_model": "assemblyai_default",
+ "language_code": "hi",
+ "speech_understanding": null,
+ "translated_texts": null,
+ "status": "completed",
+ "audio_url": "https://cdn.assemblyai.com/upload/9d8abd4768cbf02c2e05b35f541f58f7a7fe559617d33eb7d8b4a1468abdafc2/a47f5140-2580-4bf2-9edf-e77e38bae0f3",
+ "text": "\u092e\u093e\u0930\u094d\u0921\u093f\u092c\u093f\u091f \u0915\u094b \u0928\u0947\u0935\u0930 \u0915\u094d\u092f\u094b\u0902 \u0939\u0940 \u0932\u0947 \u0930\u0939\u0947 \u0939\u094b? \u0935\u0947\u092f\u0930\u0939\u093e\u0909\u0938 \u092a\u0947 \u0935\u0947\u0938\u094d\u091f \u0939\u0941\u0906\u0964 \u0939\u092e\u093e\u0930\u0940 \u0926\u093e\u0928 \u0915\u093e \u0915\u094d\u092f\u093e \u0921\u0947\u0932\u0940\u0935\u0930\u0940 \u092a\u093e\u0930\u094d\u091f\u0928\u0930 \u0935\u093e\u0932\u093e \u0905\u0930\u0947\u0902\u091c \u0926\u0947\u0924\u0940 \u0925\u0940 \u0924\u0940\u0938 \u0915\u093f\u0932\u094b \u092e\u0902\u091c\u0930 \u092a\u0947\u0964 \u0935\u094b \u092c\u0928\u0924\u093e \u0935\u0947\u0938\u094d\u091f \u0915\u093e\u0964 \u092c\u094d\u0930\u093e\u0902\u0921 \u091c\u094b \u092d\u0940 \u0939\u094b\u0928\u0947 \u092c\u094d\u0930\u093e\u0902\u0921 \u0930\u0939\u0924\u093e \u0939\u0948\u0964 \u092c\u0939\u0941\u0924 \u0916\u093c\u092c\u0930 \u0939\u0948 \u092d\u0940 \u092c\u093e\u0932\u093f\u0936 \u092e\u0947\u0902\u0964 \u092a\u0939\u0932\u0940 \u091c\u0948\u0938\u0947 \u0907\u0938\u0915\u094b \u090f\u0915 \u0938\u0947 \u0915\u094b\u091f\u0947 \u0938\u0947 \u0917\u093f\u0928\u093e \u0932\u0947 \u0910\u0938\u0947 \u0907\u0938\u0915\u094b\u0964 \u0935\u093e\u0921\u093c\u0940 \u0915\u0940 \u0926\u093f\u0928 \u0930\u0939\u0940 \u0939\u0948 \u0930\u0917\u0921\u093c \u0921\u0932\u0947 \u0910\u0938\u0947\u0964 \u0915\u094b\u091f\u0947 \u0938\u0947 \u0910\u0938\u0947 \u0935\u093e\u0921\u093c\u0940 \u0915\u0940 \u092a\u094d\u092f\u093e\u0938 \u0925\u093e\u0964 \u091a\u0932 \u0932\u0947\u0928\u093e\u0964",
+ "words": [
+  {
+   "text": "\u092e\u093e\u0930\u094d\u0921\u093f\u092c\u093f\u091f",
+   "start": 2190,
+   "end": 2740,
+   "confidence": 0.37431118,
+   "speaker": null
+  },
+  {
+   "text": "\u0915\u094b",
+   "start": 2740,
+   "end": 2780,
+   "confidence": 0.9598108,
+   "speaker": null
+  },
+  {
+   "text": "\u0928\u0947\u0935\u0930",
+   "start": 2780,
+   "end": 3040,
+   "confidence": 0.7153909,
+   "speaker": null
+  },
+  {
+   "text": "\u0915\u094d\u092f\u094b\u0902",
+   "start": 3040,
+   "end": 3200,
+   "confidence": 0.6881232,
+   "speaker": null
+  },
+  {
+   "text": "\u0939\u0940",
+   "start": 3200,
+   "end": 3440,
+   "confidence": 0.61573994,
+   "speaker": null
+  },
+  {
+   "text": "\u0932\u0947",
+   "start": 3440,
+   "end": 3440,
+   "confidence": 0.54055446,
+   "speaker": null
+  },
+  {
+   "text": "\u0930\u0939\u0947",
+   "start": 3440,
+   "end": 3440,
+   "confidence": 0.50736547,
+   "speaker": null
+  },
+  {
+   "text": "\u0939\u094b?",
+   "start": 3440,
+   "end": 3660,
+   "confidence": 0.83883125,
+   "speaker": null
+  },
+  {
+   "text": "\u0935\u0947\u092f\u0930\u0939\u093e\u0909\u0938",
+   "start": 3660,
+   "end": 4180,
+   "confidence": 0.86253923,
+   "speaker": null
+  },
+  {
+   "text": "\u092a\u0947",
+   "start": 4180,
+   "end": 4240,
+   "confidence": 0.69469094,
+   "speaker": null
+  },
+  {
+   "text": "\u0935\u0947\u0938\u094d\u091f",
+   "start": 4240,
+   "end": 4620,
+   "confidence": 0.9944605,
+   "speaker": null
+  },
+  {
+   "text": "\u0939\u0941\u0906\u0964",
+   "start": 4620,
+   "end": 6260,
+   "confidence": 0.61346513,
+   "speaker": null
+  },
+  {
+   "text": "\u0939\u092e\u093e\u0930\u0940",
+   "start": 6260,
+   "end": 6560,
+   "confidence": 0.844188,
+   "speaker": null
+  },
+  {
+   "text": "\u0926\u093e\u0928",
+   "start": 6560,
+   "end": 6760,
+   "confidence": 0.8070304,
+   "speaker": null
+  },
+  {
+   "text": "\u0915\u093e",
+   "start": 6760,
+   "end": 6900,
+   "confidence": 0.7743586,
+   "speaker": null
+  },
+  {
+   "text": "\u0915\u094d\u092f\u093e",
+   "start": 6900,
+   "end": 7240,
+   "confidence": 0.74443936,
+   "speaker": null
+  },
+  {
+   "text": "\u0921\u0947\u0932\u0940\u0935\u0930\u0940",
+   "start": 7240,
+   "end": 7500,
+   "confidence": 0.8871741,
+   "speaker": null
+  },
+  {
+   "text": "\u092a\u093e\u0930\u094d\u091f\u0928\u0930",
+   "start": 7500,
+   "end": 7940,
+   "confidence": 0.99151784,
+   "speaker": null
+  },
+  {
+   "text": "\u0935\u093e\u0932\u093e",
+   "start": 7940,
+   "end": 8039,
+   "confidence": 0.9184968,
+   "speaker": null
+  },
+  {
+   "text": "\u0905\u0930\u0947\u0902\u091c",
+   "start": 8039,
+   "end": 8420,
+   "confidence": 0.82915306,
+   "speaker": null
+  },
+  {
+   "text": "\u0926\u0947\u0924\u0940",
+   "start": 8420,
+   "end": 8640,
+   "confidence": 0.7252939,
+   "speaker": null
+  },
+  {
+   "text": "\u0925\u0940",
+   "start": 8640,
+   "end": 8840,
+   "confidence": 0.81365687,
+   "speaker": null
+  },
+  {
+   "text": "\u0924\u0940\u0938",
+   "start": 8840,
+   "end": 8880,
+   "confidence": 0.5988213,
+   "speaker": null
+  },
+  {
+   "text": "\u0915\u093f\u0932\u094b",
+   "start": 8880,
+   "end": 9120,
+   "confidence": 0.79710364,
+   "speaker": null
+  },
+  {
+   "text": "\u092e\u0902\u091c\u0930",
+   "start": 9120,
+   "end": 9480,
+   "confidence": 0.7460534,
+   "speaker": null
+  },
+  {
+   "text": "\u092a\u0947\u0964",
+   "start": 9480,
+   "end": 10900,
+   "confidence": 0.77710366,
+   "speaker": null
+  },
+  {
+   "text": "\u0935\u094b",
+   "start": 10900,
+   "end": 11140,
+   "confidence": 0.48195562,
+   "speaker": null
+  },
+  {
+   "text": "\u092c\u0928\u0924\u093e",
+   "start": 11140,
+   "end": 11360,
+   "confidence": 0.98081475,
+   "speaker": null
+  },
+  {
+   "text": "\u0935\u0947\u0938\u094d\u091f",
+   "start": 11360,
+   "end": 11600,
+   "confidence": 0.86599374,
+   "speaker": null
+  },
+  {
+   "text": "\u0915\u093e\u0964",
+   "start": 11600,
+   "end": 13780,
+   "confidence": 0.98572516,
+   "speaker": null
+  },
+  {
+   "text": "\u092c\u094d\u0930\u093e\u0902\u0921",
+   "start": 13780,
+   "end": 17500,
+   "confidence": 0.89649475,
+   "speaker": null
+  },
+  {
+   "text": "\u091c\u094b",
+   "start": 17500,
+   "end": 17680,
+   "confidence": 0.7643398,
+   "speaker": null
+  },
+  {
+   "text": "\u092d\u0940",
+   "start": 17680,
+   "end": 17760,
+   "confidence": 0.99583596,
+   "speaker": null
+  },
+  {
+   "text": "\u0939\u094b\u0928\u0947",
+   "start": 17760,
+   "end": 18080,
+   "confidence": 0.79379094,
+   "speaker": null
+  },
+  {
+   "text": "\u092c\u094d\u0930\u093e\u0902\u0921",
+   "start": 18080,
+   "end": 18400,
+   "confidence": 0.9584193,
+   "speaker": null
+  },
+  {
+   "text": "\u0930\u0939\u0924\u093e",
+   "start": 18400,
+   "end": 18780,
+   "confidence": 0.8166277,
+   "speaker": null
+  },
+  {
+   "text": "\u0939\u0948\u0964",
+   "start": 18780,
+   "end": 19380,
+   "confidence": 0.9802358,
+   "speaker": null
+  },
+  {
+   "text": "\u092c\u0939\u0941\u0924",
+   "start": 28940,
+   "end": 29690,
+   "confidence": 0.4933571,
+   "speaker": null
+  },
+  {
+   "text": "\u0916\u093c\u092c\u0930",
+   "start": 29690,
+   "end": 29790,
+   "confidence": 0.43947017,
+   "speaker": null
+  },
+  {
+   "text": "\u0939\u0948",
+   "start": 29790,
+   "end": 29850,
+   "confidence": 0.69336265,
+   "speaker": null
+  },
+  {
+   "text": "\u092d\u0940",
+   "start": 29850,
+   "end": 29930,
+   "confidence": 0.62323457,
+   "speaker": null
+  },
+  {
+   "text": "\u092c\u093e\u0932\u093f\u0936",
+   "start": 29930,
+   "end": 30390,
+   "confidence": 0.35959068,
+   "speaker": null
+  },
+  {
+   "text": "\u092e\u0947\u0902\u0964",
+   "start": 30390,
+   "end": 31230,
+   "confidence": 0.5142859,
+   "speaker": null
+  },
+  {
+   "text": "\u092a\u0939\u0932\u0940",
+   "start": 31230,
+   "end": 31670,
+   "confidence": 0.44599497,
+   "speaker": null
+  },
+  {
+   "text": "\u091c\u0948\u0938\u0947",
+   "start": 31670,
+   "end": 31930,
+   "confidence": 0.48202103,
+   "speaker": null
+  },
+  {
+   "text": "\u0907\u0938\u0915\u094b",
+   "start": 31930,
+   "end": 32290,
+   "confidence": 0.94516814,
+   "speaker": null
+  },
+  {
+   "text": "\u090f\u0915",
+   "start": 32290,
+   "end": 32290,
+   "confidence": 0.9855651,
+   "speaker": null
+  },
+  {
+   "text": "\u0938\u0947",
+   "start": 32290,
+   "end": 32630,
+   "confidence": 0.97031474,
+   "speaker": null
+  },
+  {
+   "text": "\u0915\u094b\u091f\u0947",
+   "start": 32630,
+   "end": 32750,
+   "confidence": 0.86611855,
+   "speaker": null
+  },
+  {
+   "text": "\u0938\u0947",
+   "start": 32750,
+   "end": 32870,
+   "confidence": 0.8155741,
+   "speaker": null
+  },
+  {
+   "text": "\u0917\u093f\u0928\u093e",
+   "start": 32870,
+   "end": 33230,
+   "confidence": 0.7070359,
+   "speaker": null
+  },
+  {
+   "text": "\u0932\u0947",
+   "start": 33230,
+   "end": 33390,
+   "confidence": 0.8613961,
+   "speaker": null
+  },
+  {
+   "text": "\u0910\u0938\u0947",
+   "start": 33390,
+   "end": 33610,
+   "confidence": 0.7438574,
+   "speaker": null
+  },
+  {
+   "text": "\u0907\u0938\u0915\u094b\u0964",
+   "start": 33610,
+   "end": 35290,
+   "confidence": 0.66420066,
+   "speaker": null
+  },
+  {
+   "text": "\u0935\u093e\u0921\u093c\u0940",
+   "start": 35290,
+   "end": 35670,
+   "confidence": 0.8638653,
+   "speaker": null
+  },
+  {
+   "text": "\u0915\u0940",
+   "start": 35670,
+   "end": 35790,
+   "confidence": 0.97412205,
+   "speaker": null
+  },
+  {
+   "text": "\u0926\u093f\u0928",
+   "start": 35790,
+   "end": 36130,
+   "confidence": 0.8146013,
+   "speaker": null
+  },
+  {
+   "text": "\u0930\u0939\u0940",
+   "start": 36130,
+   "end": 36130,
+   "confidence": 0.4999563,
+   "speaker": null
+  },
+  {
+   "text": "\u0939\u0948",
+   "start": 36130,
+   "end": 36130,
+   "confidence": 0.91210663,
+   "speaker": null
+  },
+  {
+   "text": "\u0930\u0917\u0921\u093c",
+   "start": 36130,
+   "end": 36570,
+   "confidence": 0.98571646,
+   "speaker": null
+  },
+  {
+   "text": "\u0921\u0932\u0947",
+   "start": 36570,
+   "end": 36850,
+   "confidence": 0.6016409,
+   "speaker": null
+  },
+  {
+   "text": "\u0910\u0938\u0947\u0964",
+   "start": 36850,
+   "end": 42630,
+   "confidence": 0.869075,
+   "speaker": null
+  },
+  {
+   "text": "\u0915\u094b\u091f\u0947",
+   "start": 42630,
+   "end": 46630,
+   "confidence": 0.9996336,
+   "speaker": null
+  },
+  {
+   "text": "\u0938\u0947",
+   "start": 46630,
+   "end": 46830,
+   "confidence": 0.9980645,
+   "speaker": null
+  },
+  {
+   "text": "\u0910\u0938\u0947",
+   "start": 46830,
+   "end": 47130,
+   "confidence": 0.9511313,
+   "speaker": null
+  },
+  {
+   "text": "\u0935\u093e\u0921\u093c\u0940",
+   "start": 47130,
+   "end": 47410,
+   "confidence": 0.9968935,
+   "speaker": null
+  },
+  {
+   "text": "\u0915\u0940",
+   "start": 47410,
+   "end": 47590,
+   "confidence": 0.9965798,
+   "speaker": null
+  },
+  {
+   "text": "\u092a\u094d\u092f\u093e\u0938",
+   "start": 47590,
+   "end": 47870,
+   "confidence": 0.8546227,
+   "speaker": null
+  },
+  {
+   "text": "\u0925\u093e\u0964",
+   "start": 47870,
+   "end": 48470,
+   "confidence": 0.952509,
+   "speaker": null
+  },
+  {
+   "text": "\u091a\u0932",
+   "start": 48470,
+   "end": 49690,
+   "confidence": 0.8826225,
+   "speaker": null
+  },
+  {
+   "text": "\u0932\u0947\u0928\u093e\u0964",
+   "start": 49690,
+   "end": 50130,
+   "confidence": 0.9345969,
+   "speaker": null
+  }
+ ],
+ "utterances": null,
+ "confidence": 0.7870168,
+ "audio_duration": 51,
+ "punctuate": true,
+ "format_text": true,
+ "webhook_url": null,
+ "webhook_status_code": null,
+ "webhook_auth": false,
+ "webhook_auth_header_name": null,
+ "speed_boost": false,
+ "auto_highlights_result": null,
+ "auto_highlights": false,
+ "audio_start_from": null,
+ "audio_end_at": null,
+ "word_boost": [],
+ "boost_param": null,
+ "prompt": "Verbatim transcription of a solo YouTube tutorial recording with multiple takes. Transcribe exactly as spoken: keep false starts, repeated words, self-corrections, and filler words (um, uh) \u2014 do not clean them up.",
+ "keyterms_prompt": [],
+ "filter_profanity": false,
+ "redact_pii": false,
+ "redact_pii_audio": false,
+ "redact_pii_audio_quality": null,
+ "redact_pii_audio_options": null,
+ "redact_pii_policies": null,
+ "redact_pii_sub": null,
+ "redact_static_entities": null,
+ "speaker_labels": false,
+ "speaker_options": null,
+ "content_safety": false,
+ "iab_categories": false,
+ "content_safety_labels": {
+  "status": "unavailable",
+  "results": [],
+  "summary": {}
+ },
+ "iab_categories_result": {
+  "status": "unavailable",
+  "results": [],
+  "summary": {}
+ },
+ "language_detection": true,
+ "language_detection_options": null,
+ "language_detection_results": null,
+ "language_confidence_threshold": null,
+ "language_confidence": 0.2222,
+ "custom_spelling": null,
+ "throttled": false,
+ "auto_chapters": false,
+ "summarization": false,
+ "summary_type": null,
+ "summary_model": null,
+ "custom_topics": false,
+ "topics": [],
+ "speech_threshold": null,
+ "speech_model": null,
+ "speech_models": [
+  "universal-3-5-pro",
+  "universal-2"
+ ],
+ "speech_model_used": "universal-3-5-pro",
+ "metadata": {
+  "domain_used": null,
+  "warnings": [
+   {
+    "message": "`disfluencies` was not applied because it is only supported for English audio. The specified or detected language was 'hi'."
+   }
+  ]
+ },
+ "temperature": null,
+ "remove_audio_tags": "all",
+ "chapters": null,
+ "disfluencies": true,
+ "entity_detection": false,
+ "sentiment_analysis": false,
+ "sentiment_analysis_results": null,
+ "entities": null,
+ "speakers_expected": null,
+ "summary": null,
+ "custom_topics_results": null,
+ "is_deleted": null,
+ "multichannel": null,
+ "project_id": 1928602,
+ "token_id": 1958943
+}

@@ -1,0 +1,90 @@
+{
+  "rounds": [
+    [
+      {
+        "id": "personal-war-room",
+        "name": "The Desk Command Center",
+        "premise": "Turn a single laptop screen into a Pentagon-grade global situational awareness center.",
+        "hook": "You don't need top-secret clearance to see global crises unfold in real-time—you just need this open-source dashboard.",
+        "metaphor": "Pentagon Operations Desk",
+        "mood": [
+          "clinical",
+          "high-stakes",
+          "authoritative"
+        ],
+        "palette": {
+          "bg": "#0b0f19",
+          "accent": "#00f0ff",
+          "accent2": "#ff3366"
+        },
+        "motif": "Targeting reticle sweeping across 56 geographic map layers",
+        "sections": [
+          "The Information Blindspot",
+          "Booting the Situation Room",
+          "56 Map Layers on deck.gl",
+          "Cross-Stream Signal Convergence",
+          "The 29-Exchange Finance Radar",
+          "Local AI Synthesis via Ollama",
+          "Deploying Your Personal Command Center"
+        ],
+        "why_it_fits": "Directly builds on the geopolitical tracking, military signal correlation, and dual-map engine features."
+      },
+      {
+        "id": "global-nervous-system",
+        "name": "Planetary Signal Network",
+        "premise": "Treat the entire planet as a single organism transmitting live data streams into an AI brain.",
+        "hook": "Right now, 500 news feeds, 29 stock markets, and escalation signals are firing at once—this AI connects every single node.",
+        "metaphor": "Earth's Digital Central Nervous System",
+        "mood": [
+          "cinematic",
+          "analytical",
+          "futuristic"
+        ],
+        "palette": {
+          "bg": "#05050a",
+          "accent": "#7928ca",
+          "accent2": "#00dfa2"
+        },
+        "motif": "Luminescent data pulses travelling across a 3D globe.gl model",
+        "sections": [
+          "The Planetary Noise Problem",
+          "Wiring 500 News Streams",
+          "Constructing the 3D Globe",
+          "Correlating Disaster and Market Signals",
+          "Plugging into Model Context Protocol",
+          "Synthesizing Raw Noise into Briefs",
+          "Reading the Live Planet"
+        ],
+        "why_it_fits": "Leverages the 500 curated feeds, 15 categories, 3D globe visualization, and cross-stream correlation capabilities."
+      },
+      {
+        "id": "sovereign-intelligence-agency",
+        "name": "The Zero-Cloud Agency",
+        "premise": "Build an air-gapped threat monitoring system running entirely on local hardware without API keys.",
+        "hook": "No SaaS subscriptions, no API keys, and zero cloud tracking—how to run a private global intelligence agency on your local machine.",
+        "metaphor": "Sovereign Self-Hosted Threat Desk",
+        "mood": [
+          "tactical",
+          "focused",
+          "empowered"
+        ],
+        "palette": {
+          "bg": "#121212",
+          "accent": "#ffb000",
+          "accent2": "#39ff14"
+        },
+        "motif": "Terminal command outputs morphing into high-density WebGL dashboards",
+        "sections": [
+          "The Trap of Centralized SaaS Dashboards",
+          "Spinning Up Ollama Locally",
+          "Zero-Key Data Ingestion",
+          "AI News Summarization Engine",
+          "Infrastructure and Flight Layer Tracking",
+          "Running Local MCP Agents",
+          "Your Sovereign Intelligence Operations"
+        ],
+        "why_it_fits": "Highlights the privacy-focused local AI feature powered by Ollama alongside AGPL v3 self-hosting."
+      }
+    ]
+  ]
+}

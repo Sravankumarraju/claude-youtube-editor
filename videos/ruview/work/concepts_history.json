@@ -1,0 +1,90 @@
+{
+  "rounds": [
+    [
+      {
+        "id": "bat-vision-sonar",
+        "name": "The WiFi Sonar",
+        "premise": "Turn invisible ambient WiFi waves into a zero-camera spatial radar that sees through solid walls.",
+        "hook": "Right now thousands of invisible radio waves are passing through your chest and bouncing your heartbeat back to your router.",
+        "metaphor": "Ambient RF Echo-Location",
+        "mood": [
+          "Cinematic",
+          "Atmospheric",
+          "Mysterious"
+        ],
+        "palette": {
+          "bg": "#0B0F19",
+          "accent": "#00FF9D",
+          "accent2": "#00B8FF"
+        },
+        "motif": "Concentric radio wave ripple overlays illuminating physical room contours in darkness",
+        "sections": [
+          "The Invisible Wave Grid",
+          "CSI Physics Explained",
+          "Writing Rust for RF Signals",
+          "Seeing Through Solid Walls",
+          "Tracking Heartbeats Without Wearables",
+          "Deploying to Home Assistant",
+          "The Zero-Pixel Future"
+        ],
+        "why_it_fits": "Grounds the complex physics of Channel State Information wave distortion in a vivid perceptual metaphor."
+      },
+      {
+        "id": "the-anti-camera",
+        "name": "The Anti Camera",
+        "premise": "Monitor your health and home security in total darkness without generating or storing a single pixel of video.",
+        "hook": "What if you could track your sleep, detect falls, and guard your house without placing a single creepy camera indoors?",
+        "metaphor": "The Zero-Optical Guardian",
+        "mood": [
+          "Tactical",
+          "Sleek",
+          "Rebellious"
+        ],
+        "palette": {
+          "bg": "#121212",
+          "accent": "#FF3366",
+          "accent2": "#FFFFFF"
+        },
+        "motif": "Camera lenses shattering into abstract wireframe skeletal poses derived purely from RF data",
+        "sections": [
+          "The Camera Privacy Dilemma",
+          "Sensing Without Pixels",
+          "Hugging Face DensePose Mapping",
+          "Sleep Apnea and Fall Detection",
+          "Setting Up Home Assistant Automation Triggers",
+          "Testing Spatial Detection Through Concrete",
+          "Absolute Privacy as an Architecture"
+        ],
+        "why_it_fits": "Directly targets the core value proposition of non-optical, privacy-first spatial intelligence."
+      },
+      {
+        "id": "eight-dollar-supercomputer",
+        "name": "The Eight Dollar Miracle",
+        "premise": "Squeeze a 55 kilobyte Rust AI model onto an eight dollar ESP32 chip to turn radio noise into spatial intelligence.",
+        "hook": "This eight dollar piece of silicon is running a spatial AI model inside fifty-five kilobytes of memory.",
+        "metaphor": "Extreme Micro Hardware Optimization",
+        "mood": [
+          "Gritty",
+          "High-Energy",
+          "Technical"
+        ],
+        "palette": {
+          "bg": "#1A1815",
+          "accent": "#FF9900",
+          "accent2": "#00E5FF"
+        },
+        "motif": "ESP32 pinout diagrams paired with real-time memory byte allocation counters",
+        "sections": [
+          "The Eight Dollar Microchip Challenge",
+          "Fitting Spatial AI into 55KB RAM",
+          "Rust on ESP32 Bare Metal",
+          "Extracting Temporal CSI Patterns",
+          "Building an Edge Health Module",
+          "Real Time Respiratory Monitoring",
+          "The Low Power Edge Revolution"
+        ],
+        "why_it_fits": "Focuses on the extraordinary engineering accomplishment of running DensePose WiFi tracking on ultra-cheap hardware."
+      }
+    ]
+  ]
+}

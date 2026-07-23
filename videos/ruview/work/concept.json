@@ -1,0 +1,28 @@
+{
+  "id": "the-anti-camera",
+  "name": "The Anti Camera",
+  "premise": "Monitor your health and home security in total darkness without generating or storing a single pixel of video.",
+  "hook": "What if you could track your sleep, detect falls, and guard your house without placing a single creepy camera indoors?",
+  "metaphor": "The Zero-Optical Guardian",
+  "mood": [
+    "Tactical",
+    "Sleek",
+    "Rebellious"
+  ],
+  "palette": {
+    "bg": "#121212",
+    "accent": "#FF3366",
+    "accent2": "#FFFFFF"
+  },
+  "motif": "Camera lenses shattering into abstract wireframe skeletal poses derived purely from RF data",
+  "sections": [
+    "The Camera Privacy Dilemma",
+    "Sensing Without Pixels",
+    "Hugging Face DensePose Mapping",
+    "Sleep Apnea and Fall Detection",
+    "Setting Up Home Assistant Automation Triggers",
+    "Testing Spatial Detection Through Concrete",
+    "Absolute Privacy as an Architecture"
+  ],
+  "why_it_fits": "Directly targets the core value proposition of non-optical, privacy-first spatial intelligence."
+}

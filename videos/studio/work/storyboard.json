@@ -1,90 +1,217 @@
 {
-  "title": "code-review-graph",
-  "source_url": "https://github.com/tirth8205/code-review-graph",
-  "template": "brand",
+  "title": "Planetary Signal Network: Real-Time Global AI",
+  "source_url": "http://github.com/koala73/worldmonitor",
+  "template": "concept-global-nervous-system",
   "scenes": [
     {
       "type": "title",
-      "dur": 211,
-      "eyebrow": "open-source · github",
-      "title": "code-review-graph",
-      "subtitle": "Local-first code intelligence graph for MCP and CLI. Builds…",
-      "narration": "code-review-graph. Local-first code intelligence graph for MCP and CLI. Builds…",
-      "audio": "projects/studio/narration/00.mp3"
+      "narration": "Right now, 500 news feeds, 29 stock markets, and escalation signals are firing at once—this AI connects every single node.",
+      "eyebrow": "The Planetary Noise Problem",
+      "title": "Planetary Signal Network",
+      "subtitle": "Earth's Digital Central Nervous System",
+      "dur": 265
     },
     {
       "type": "statement",
-      "dur": 322,
-      "eyebrow": "overview",
-      "text": "Local-first code intelligence graph for MCP and CLI. Builds a persistent map of your codebase so AI coding tools read only what matters, with benchmarked context reductions on reviews and large-repo workflows.",
-      "narration": "Local-first code intelligence graph for MCP and CLI. Builds a persistent map of your codebase so AI coding tools read only what matters, with benchmarked context reductions on reviews and large-repo workflows.",
-      "audio": "projects/studio/narration/01.mp3"
+      "narration": "Our world generates an overwhelming flood of raw geopolitical and market noise every single second.",
+      "eyebrow": "The Planetary Noise Problem",
+      "text": "Raw Global Noise Is Overwhelming",
+      "dur": 203
     },
     {
       "type": "features",
-      "dur": 221,
-      "eyebrow": "highlights",
+      "narration": "World Monitor aggregates these streams into a unified central nervous system for live situational awareness.",
+      "eyebrow": "The Central Nervous System",
       "items": [
         {
-          "label": "Quick Start"
+          "label": "World Monitor"
         },
         {
-          "label": "How It Works"
-        },
-        {
-          "label": "Blast-radius analysis"
+          "label": "Live Situational Awareness"
         }
       ],
-      "narration": "Highlights: Quick Start; How It Works; Blast-radius analysis.",
-      "audio": "projects/studio/narration/02.mp3"
+      "dur": 203
     },
     {
-      "type": "steps",
-      "dur": 231,
-      "eyebrow": "built with",
-      "steps": [
-        "Python",
-        "ai-coding",
-        "claude",
-        "claude-code",
-        "code-review",
-        "graphrag"
-      ],
-      "narration": "Built with Python, ai-coding, claude, claude-code, code-review, graphrag.",
-      "audio": "projects/studio/narration/03.mp3"
+      "type": "repo_scroll",
+      "narration": "With over 68,000 stars, the repository provides core architecture docs, Docker setups, and local agents.",
+      "eyebrow": "On GitHub",
+      "repo": {
+        "owner": "koala73",
+        "name": "worldmonitor",
+        "url": "http://github.com/koala73/worldmonitor",
+        "stars": 68328,
+        "description": "Real-time global intelligence dashboard. AI-powered news aggregation, geopolitical monitoring, and infrastructure tracking in a unified situ",
+        "topics": [
+          "TypeScript",
+          "agent",
+          "ai",
+          "dashboard",
+          "geopolitics",
+          "mcp"
+        ],
+        "files": [
+          "AGENTS.md",
+          "ARCHITECTURE.md",
+          "CHANGELOG.md",
+          "CODE_OF_CONDUCT.md",
+          "CONCEPTS.md",
+          "CONTRIBUTING.md",
+          "Dockerfile",
+          "Dockerfile.digest-notifications",
+          "Dockerfile.publish-bootstrap-tiers",
+          "Dockerfile.relay",
+          "Dockerfile.seed-bundle-portwatch-port-activity",
+          "Dockerfile.seed-bundle-resilience-validation"
+        ],
+        "readme": [
+          "Real-time global intelligence dashboard. AI-powered news aggregation, geopolitical",
+          "monitoring, and infrastructure tracking in a unified situational awareness interface",
+          "## Features",
+          "- What It Does",
+          "- Support Status",
+          "- Quick Start",
+          "- Tech Stack",
+          "- Programmatic Access",
+          "- Flight Data",
+          "## Highlights",
+          "- 500+ curated news feeds across 15 categories, AI-synthesized into briefs",
+          "- Dual map engine — 3D globe globe.gl and WebGL flat map deck.gl with 56 map layer types",
+          "- Cross-stream correlation — military, economic, disaster, and escalation signal convergence",
+          "- Finance radar — 29 stock exchanges, commodities, crypto, and 7-signal market composite",
+          "- Local AI — run everything with Ollama, no API keys required",
+          "## Built with",
+          "TypeScript, agent, ai, dashboard, geopolitics, mcp, mcp-server, monitoring"
+        ]
+      },
+      "dur": 240
     },
     {
-      "type": "code",
-      "dur": 150,
-      "eyebrow": "example",
-      "filename": "example",
-      "lines": [
-        "pip install code-review-graph                     # or: pipx install code-review-graph",
-        "code-review-graph install          # auto-detects and configures all supported platforms",
-        "code-review-graph build            # parse your codebase"
-      ],
-      "narration": "Here is a quick example.",
-      "audio": "projects/studio/narration/04.mp3"
+      "type": "statement",
+      "narration": "Luminescent data pulses travel across the network as over 500 curated news streams wire directly in.",
+      "eyebrow": "Wiring 500 News Streams",
+      "text": "500 Feeds Firing Simultaneously",
+      "dur": 215
     },
     {
       "type": "bullets",
-      "dur": 112,
-      "eyebrow": "key points",
-      "title": "What matters",
+      "narration": "Fifteen distinct categories feed continuous global events straight into an intelligent processing engine.",
+      "eyebrow": "Wiring 500 News Streams",
       "points": [
-        "uses: actions/checkout@v7",
-        "uses: tirth8205/code-review-graph@v2.3.6"
+        "15 News Categories",
+        "AI Synthesized Briefs"
       ],
-      "narration": "The key points at a glance.",
-      "audio": "projects/studio/narration/05.mp3"
+      "title": "Stream Aggregation",
+      "dur": 178
+    },
+    {
+      "type": "statement",
+      "narration": "The system projects these global signals directly onto an interactive three-dimensional digital model.",
+      "eyebrow": "Constructing the 3D Globe",
+      "text": "Dual Map Visual Engine",
+      "dur": 178
+    },
+    {
+      "type": "features",
+      "narration": "It pairs a 3D globe.gl model with deck.gl WebGL rendering across 56 distinct map layers.",
+      "eyebrow": "Constructing the 3D Globe",
+      "items": [
+        {
+          "label": "globe.gl 3D Globe"
+        },
+        {
+          "label": "deck.gl 56 Layers"
+        }
+      ],
+      "dur": 203
+    },
+    {
+      "type": "bullets",
+      "narration": "Cross-stream algorithms detect convergence between military movements, natural disasters, and real-time infrastructure status.",
+      "eyebrow": "Correlating Disaster and Market ",
+      "points": [
+        "Military & Economic Convergence",
+        "Disaster & Infrastructure Tracking"
+      ],
+      "title": "Cross-Stream Correlation",
+      "dur": 178
+    },
+    {
+      "type": "statement",
+      "narration": "Its finance radar tracks twenty-nine stock exchanges, commodities, crypto, and a seven-signal composite.",
+      "eyebrow": "Correlating Disaster and Market ",
+      "text": "29 Stock Exchanges Synced",
+      "dur": 178
+    },
+    {
+      "type": "features",
+      "narration": "You can plug these streams straight into AI using MCP without requiring external API keys.",
+      "eyebrow": "Plugging into Model Context Prot",
+      "items": [
+        {
+          "label": "MCP Server Protocol"
+        },
+        {
+          "label": "Local Ollama Support"
+        }
+      ],
+      "dur": 203
+    },
+    {
+      "type": "code",
+      "narration": "Simply clone the repository, install dependencies, and run the local development server in seconds.",
+      "eyebrow": "Plugging into Model Context Prot",
+      "lines": [
+        "git clone https://github.com/koala73/worldmonitor.git",
+        "cd worldmonitor",
+        "npm install",
+        "npm run dev"
+      ],
+      "filename": "terminal",
+      "dur": 191
+    },
+    {
+      "type": "steps",
+      "narration": "Raw global noise is instantly synthesized into clear executive intelligence briefs by local AI models.",
+      "eyebrow": "Synthesizing Raw Noise into Brie",
+      "steps": [
+        "Ingest Raw Streams",
+        "Synthesize Intelligence Briefs"
+      ],
+      "dur": 203
+    },
+    {
+      "type": "statement",
+      "narration": "Every pulse of information is translated into action-ready situational awareness before your eyes.",
+      "eyebrow": "Synthesizing Raw Noise into Brie",
+      "text": "Instant Situational Intelligence",
+      "dur": 178
+    },
+    {
+      "type": "bullets",
+      "narration": "Launch specialized dashboards tailored for tech trends, financial markets, or global energy infrastructure.",
+      "eyebrow": "Reading the Live Planet",
+      "points": [
+        "Tech & Finance Variants",
+        "Energy & Commodity Monitors"
+      ],
+      "title": "Targeted Dashboards",
+      "dur": 178
+    },
+    {
+      "type": "statement",
+      "narration": "The entire planet now operates as a single live organism transmitting data directly to you.",
+      "eyebrow": "Reading the Live Planet",
+      "text": "The Planet Is Online",
+      "dur": 203
     },
     {
       "type": "cta",
-      "dur": 91,
-      "title": "Star it on GitHub",
-      "sub": "https://github.com/tirth8205/code-review-graph",
-      "narration": "Star it on GitHub.",
-      "audio": "projects/studio/narration/06.mp3"
+      "narration": "Check out the repo on GitHub today and start reading Earth's live digital pulse.",
+      "eyebrow": "Join the Network",
+      "title": "Explore World Monitor",
+      "sub": "github.com/koala73/worldmonitor",
+      "dur": 191
     }
   ]
 }

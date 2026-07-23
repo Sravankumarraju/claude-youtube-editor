@@ -31,19 +31,46 @@ from cutlib import AudioProbe, active_keeps, load_words, plan_clip
 
 SR = 48000  # audio build sample rate
 
-ENC = {
-    "preview": ["-vf", "scale=1280:-2,format=yuv420p", "-c:v", "h264_nvenc", "-preset", "p4",
-                "-rc", "vbr", "-cq", "30", "-b:v", "0"],
-    "final": ["-c:v", "hevc_nvenc", "-preset", "p5", "-profile:v", "main10",
-              "-pix_fmt", "p010le", "-rc", "vbr", "-cq", "19", "-b:v", "0"],
+# Encoder configs as (ffmpeg_args, container_codec). NVIDIA NVENC is used when a
+# working GPU encoder is detected; otherwise we fall back to CPU libx264 so the
+# render works on any machine (Macs, laptops, CI). container_codec drives the
+# bitstream filter used for the TS concat below, so it must track the real codec.
+ENC_GPU = {
+    "preview": (["-vf", "scale=1280:-2,format=yuv420p", "-c:v", "h264_nvenc", "-preset", "p4",
+                 "-rc", "vbr", "-cq", "30", "-b:v", "0"], "h264"),
+    "final": (["-c:v", "hevc_nvenc", "-preset", "p5", "-profile:v", "main10",
+               "-pix_fmt", "p010le", "-rc", "vbr", "-cq", "19", "-b:v", "0"], "hevc"),
+}
+ENC_CPU = {
+    "preview": (["-vf", "scale=1280:-2,format=yuv420p", "-c:v", "libx264", "-preset", "veryfast",
+                 "-crf", "26"], "h264"),
+    "final": (["-vf", "format=yuv420p", "-c:v", "libx264", "-preset", "medium",
+               "-crf", "18"], "h264"),
 }
 AUDIO_BITRATE = {"preview": "160k", "final": "256k"}
 
 
-def render_segment(src: Path, seg: tuple[float, float], out: Path, enc: list[str]) -> None:
+def nvenc_ok() -> bool:
+    """True only if h264_nvenc actually encodes (an NVIDIA GPU is present + usable).
+
+    Presence in the encoder list isn't enough — the build can ship nvenc without a
+    GPU. A one-frame test encode is the definitive probe."""
+    try:
+        r = subprocess.run(
+            ["ffmpeg", "-hide_banner", "-loglevel", "error", "-f", "lavfi",
+             "-i", "testsrc=size=64x64:rate=1:duration=0.1", "-frames:v", "1",
+             "-c:v", "h264_nvenc", "-f", "null", "-"],
+            capture_output=True, text=True, timeout=25)
+        return r.returncode == 0
+    except Exception:
+        return False
+
+
+def render_segment(src: Path, seg: tuple[float, float], out: Path, enc: list[str],
+                   hwaccel: list[str]) -> None:
     start, end = seg
     dur = end - start
-    cmd = ["ffmpeg", "-y", "-loglevel", "error", "-hwaccel", "cuda",
+    cmd = ["ffmpeg", "-y", "-loglevel", "error", *hwaccel,
            "-ss", f"{start:.3f}", "-t", f"{dur:.3f}", "-i", str(src),
            "-map", "0:0", "-an", *enc, str(out)]
     subprocess.run(cmd, check=True)
@@ -93,15 +120,20 @@ def main() -> None:
         for seg in plan_clip(cid, active_keeps(clip), words, style, probe):
             jobs.append((project / clip["file"], seg))
 
+    gpu = nvenc_ok()
+    enc_args, vcodec = (ENC_GPU if gpu else ENC_CPU)[args.mode]
+    hwaccel = ["-hwaccel", "cuda"] if gpu else []
+
     total = sum(e - s for _, (s, e) in jobs)
     print(f"{args.style}/{args.mode}: {len(jobs)} segments, output ~ {total / 60:.1f} min")
+    print(f"encoder: {'GPU (nvenc)' if gpu else 'CPU (libx264)'} -> {vcodec}")
 
     seg_dir = project / "work" / "render" / f"{args.style}-{args.mode}"
     seg_dir.mkdir(parents=True, exist_ok=True)
     outs = [seg_dir / f"seg_{i:03d}.mp4" for i in range(len(jobs))]
 
     with ThreadPoolExecutor(max_workers=3) as pool:
-        futs = [pool.submit(render_segment, src, seg, out, ENC[args.mode])
+        futs = [pool.submit(render_segment, src, seg, out, enc_args, hwaccel)
                 for (src, seg), out in zip(jobs, outs)]
         for i, f in enumerate(futs):
             f.result()
@@ -114,7 +146,7 @@ def main() -> None:
     # into the video (~10-16ms per cut => ~0.8s over ~100 cuts on 59.94fps footage),
     # while the sample-exact audio has none -> progressive lip-sync drift. TS carries no
     # per-file trailing gap, so the concat stays frame-exact (bounded, non-accumulating).
-    bsf = "hevc_mp4toannexb" if args.mode == "final" else "h264_mp4toannexb"
+    bsf = "hevc_mp4toannexb" if vcodec == "hevc" else "h264_mp4toannexb"
     ts_files = []
     for o in outs:
         ts = o.with_suffix(".ts")

@@ -1,0 +1,86 @@
+{
+  "repo": "worldmonitor",
+  "concepts": [
+    {
+      "id": "planetary-barometer",
+      "name": "The Planetary Barometer",
+      "premise": "Forecast global geopolitical and financial storms before they break using real-time atmospheric radar logic.",
+      "hook": "What if global instability had a storm radar, and you could spot geopolitical cold fronts hours before the news reports them?",
+      "metaphor": "Severe weather forecasting center tracking global chaos",
+      "mood": [
+        "cinematic",
+        "atmospheric",
+        "forensic"
+      ],
+      "palette": {
+        "bg": "#0b1320",
+        "accent": "#38bdf8",
+        "accent2": "#f59e0b"
+      },
+      "motif": "Isobar radar sweeps overlapping flight vectors and 3D globe heatmaps",
+      "sections": [
+        "The Media Blindspot",
+        "Spinning Up the Local Storm Engine",
+        "Overlaying 500 Feed Pressure Systems",
+        "Tracking Flight and Infrastructure Anomalies",
+        "Cross-Stream Crisis Correlation",
+        "Local AI Incident Briefing"
+      ],
+      "why_it_fits": "Treating disparate global data streams as atmospheric pressure systems highlights World Monitor's cross-stream signal correlation engine."
+    },
+    {
+      "id": "hyper-wire-newsroom",
+      "name": "The Local Wire Service",
+      "premise": "Turn a chaotic 500-feed global news firehose into a silent local AI-powered editorial desk.",
+      "hook": "500 international news feeds are screaming at once, but your local AI just muted the room and handed you the final edit.",
+      "metaphor": "Automated retro-futuristic global news agency",
+      "mood": [
+        "fast-paced",
+        "tactile",
+        "methodical"
+      ],
+      "palette": {
+        "bg": "#121212",
+        "accent": "#22c55e",
+        "accent2": "#e11d48"
+      },
+      "motif": "Teletype ticker tape streams morphing into WebGL deck.gl vector maps",
+      "sections": [
+        "Drowning in Noise",
+        "Plugging into 500 Raw Feeds",
+        "Launching Ollama Editorial Agents",
+        "Dual-Map Spatial Verification",
+        "Connecting Infrastructure Outages",
+        "Building Your Private MCP Desk"
+      ],
+      "why_it_fits": "Leaning into the 500+ RSS/news categories and local Ollama capability showcases its strength as an off-grid intelligence aggregator."
+    },
+    {
+      "id": "macro-signal-terminal",
+      "name": "Macro Arbitrage Terminal",
+      "premise": "Outpace Wall Street by correlating geopolitical shocks, commodity shifts, and live flight paths in real time.",
+      "hook": "Retail traders check stock charts, but macro funds trade off supply chain bottlenecks and military transport flights.",
+      "metaphor": "High-frequency global macro trading floor",
+      "mood": [
+        "tense",
+        "analytical",
+        "provocative"
+      ],
+      "palette": {
+        "bg": "#0a0a0c",
+        "accent": "#eab308",
+        "accent2": "#8b5cf6"
+      },
+      "motif": "Split-screen stock tickers syncing with 56 map layer overlays and flight vectors",
+      "sections": [
+        "The Terminal Trap",
+        "Booting the 29-Exchange Finance Radar",
+        "Correlating Supply Chain Disruptions",
+        "Live Flight Anomalies vs Commodity Prices",
+        "Zero-Cost Ollama Signal Summaries",
+        "Executing on Signal Convergence"
+      ],
+      "why_it_fits": "Focuses directly on World Monitor's 29 stock exchanges, 7-signal composite, commodity variants, and real-time flight tracking features."
+    }
+  ]
+}

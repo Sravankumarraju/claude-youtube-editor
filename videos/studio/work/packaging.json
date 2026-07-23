@@ -1,0 +1,21 @@
+{
+  "title": "Track Global Events in Real Time With AI",
+  "titles": [
+    "Track Global Events in Real Time With AI",
+    "Ditch 20 Tabs: The AI World Intelligence Tool",
+    "Monitor Global News and Flights on One AI Dashboard"
+  ],
+  "description": "Stop juggling dozens of open tabs just to follow critical global events and flight data. This open-source AI dashboard brings geopolitical news, infrastructure tracking, and real-time monitoring into a unified visual interface. Explore the repository here: http://github.com/koala73/worldmonitor",
+  "thumbnails": [
+    {
+      "overlay": "ONE AI DASHBOARD",
+      "file": "projects/studio/packaging/ThumbWorldmonitor0.png",
+      "jpg": "projects/studio/packaging/ThumbWorldmonitor0.jpg"
+    },
+    {
+      "overlay": "NO MORE TABS",
+      "file": "projects/studio/packaging/ThumbWorldmonitor1.png",
+      "jpg": "projects/studio/packaging/ThumbWorldmonitor1.jpg"
+    }
+  ]
+}

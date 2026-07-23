@@ -75,6 +75,9 @@ def list_videos() -> list[dict]:
 # ---- shared job state ------------------------------------------------------
 LOCK = threading.Lock()
 STATE: dict = {"phase": "idle", "log": [], "ok": False, "error": None, "compId": None, "running": False}
+PKG_LOCK = threading.Lock()
+PKG_STATE: dict = {"phase": "idle", "log": [], "ok": False, "error": None, "data": None, "running": False}
+PKG_DIR = REPO / "media" / "projects" / Path(PROJECT).name / "packaging"
 
 # ---- Remotion Studio (the "video editor" on :3000) -------------------------
 STUDIO_PORT = 3000
@@ -179,31 +182,48 @@ def do_generate(payload: dict) -> None:
         fmt = "vertical" if payload.get("format") == "vertical" else "landscape"
         want_captions = bool(payload.get("captions"))
         want_voice = bool(payload.get("voiceover"))
+        want_ai = payload.get("ai", True) is not False
         template = (payload.get("template") or "brand").strip() or "brand"
+        try:
+            duration = int(payload.get("duration") or 120)
+        except (TypeError, ValueError):
+            duration = 120
 
-        STATE["phase"] = "generating storyboard"
-        cmd = [PY, "tools/gen_faceless.py", "--project", PROJECT, "--format", fmt, "--template", template]
-        if want_captions:
-            cmd.append("--captions")
-        p = _run(cmd, REPO)
-        if p.returncode != 0:
-            raise RuntimeError("Storyboard generation failed.")
+        # 1) storyboard — AI-written script (Gemini) targeting the chosen duration,
+        #    with a graceful fall back to the basic heuristic generator.
+        sb_ok = False
+        if want_ai:
+            STATE["phase"] = "writing AI script"
+            ps = _run([PY, "tools/gen_script.py", "--project", PROJECT,
+                       "--duration", str(duration), "--template", template], REPO)
+            sb_ok = ps.returncode == 0
+            if not sb_ok:
+                _log("AI script unavailable — falling back to the basic generator.")
+        if not sb_ok:
+            STATE["phase"] = "generating storyboard"
+            cmd = [PY, "tools/gen_faceless.py", "--project", PROJECT, "--format", fmt, "--template", template]
+            if want_captions:
+                cmd.append("--captions")
+            pb = _run(cmd, REPO)
+            if pb.returncode != 0:
+                raise RuntimeError("Storyboard generation failed.")
 
+        # 2) optional voice-over — speak each scene, fit scene durations to the audio
         if want_voice:
-            # Speak each scene's narration (ElevenLabs), fit scene durations to the
-            # audio, then re-emit the shot so the TSX embeds the audio + new timings.
             STATE["phase"] = "generating voice-over"
             pv = _run([PY, "tools/gen_narration.py", "--project", PROJECT], REPO)
             if pv.returncode != 0:
                 raise RuntimeError("Voice-over failed — check ELEVENLABS_API_KEY and account credits.")
-            STATE["phase"] = "re-emitting shot with audio"
-            cmd2 = [PY, "tools/gen_faceless.py", "--project", PROJECT, "--from-storyboard",
-                    "--format", fmt, "--template", template]
-            if want_captions:
-                cmd2.append("--captions")
-            p = _run(cmd2, REPO)
-            if p.returncode != 0:
-                raise RuntimeError("Re-emitting the shot with audio failed.")
+
+        # 3) emit the shot from the final storyboard (audio + timings baked in)
+        STATE["phase"] = "building shot"
+        cmd2 = [PY, "tools/gen_faceless.py", "--project", PROJECT, "--from-storyboard",
+                "--format", fmt, "--template", template]
+        if want_captions:
+            cmd2.append("--captions")
+        p = _run(cmd2, REPO)
+        if p.returncode != 0:
+            raise RuntimeError("Building the shot failed.")
 
         m = re.search(r"composition '([^']+)'", p.stdout or "")
         if not m:
@@ -227,6 +247,27 @@ def do_generate(payload: dict) -> None:
         _log("ERROR: " + str(e))
     finally:
         STATE["running"] = False
+
+
+def do_package(count: int) -> None:
+    """Generate title/description/thumbnails for the current project."""
+    PKG_STATE.update(phase="writing copy + rendering thumbnails", log=[], ok=False, error=None, data=None, running=True)
+    try:
+        cmd = [PY, "tools/gen_package.py", "--project", PROJECT, "--count", str(count)]
+        PKG_STATE["log"].append("$ " + " ".join(cmd))
+        p = subprocess.run(cmd, cwd=str(REPO), capture_output=True, text=True, encoding="utf-8", errors="replace")
+        for ln in ((p.stdout or "") + "\n" + (p.stderr or "")).strip().splitlines()[-12:]:
+            if ln.strip():
+                PKG_STATE["log"].append(ln.rstrip())
+        if p.returncode != 0:
+            raise RuntimeError("Packaging failed — check GEMINI_API_KEY and image-model access.")
+        pkg = json.loads((WORK / "packaging.json").read_text(encoding="utf-8"))
+        PKG_STATE.update(phase="done", ok=True, data=pkg)
+    except Exception as e:  # noqa: BLE001
+        PKG_STATE.update(phase="error", error=str(e))
+        PKG_STATE["log"].append("ERROR: " + str(e))
+    finally:
+        PKG_STATE["running"] = False
 
 
 # ---- HTTP ------------------------------------------------------------------
@@ -258,6 +299,10 @@ class Handler(BaseHTTPRequestHandler):
             self._json({"videos": list_videos()})
         elif path == "/api/editor":
             self._json({"running": _port_open(STUDIO_PORT), "url": studio_url()})
+        elif path == "/api/package-status":
+            self._json(PKG_STATE)
+        elif path.startswith("/pkg/"):
+            self._serve_pkg(path.split("/pkg/", 1)[1])
         elif path.startswith("/media/"):
             self._serve_media(path.split("/media/", 1)[1])
         else:
@@ -285,6 +330,17 @@ class Handler(BaseHTTPRequestHandler):
             self._json({"ok": True})
         elif self.path == "/api/editor/start":
             self._json(ensure_studio())
+        elif self.path == "/api/package":
+            with PKG_LOCK:
+                if PKG_STATE["running"]:
+                    return self._json({"error": "Packaging already running."}, 409)
+                PKG_STATE["running"] = True
+            try:
+                count = int(payload.get("count") or 2)
+            except (TypeError, ValueError):
+                count = 2
+            threading.Thread(target=do_package, args=(count,), daemon=True).start()
+            self._json({"ok": True})
         else:
             self._json({"error": "not found"}, 404)
 
@@ -314,6 +370,13 @@ class Handler(BaseHTTPRequestHandler):
             self.send_header("Content-Length", str(len(data)))
             self.end_headers()
             self.wfile.write(data)
+
+    def _serve_pkg(self, name: str):
+        f = PKG_DIR / Path(name).name
+        if not f.exists():
+            return self._send(404, b"no file", "text/plain")
+        ctype = "image/jpeg" if f.suffix.lower() in (".jpg", ".jpeg") else "image/png"
+        self._send(200, f.read_bytes(), ctype)
 
 
 def main() -> int:

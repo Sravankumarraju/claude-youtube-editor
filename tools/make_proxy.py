@@ -12,12 +12,30 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 
+def _nvenc_ok() -> bool:
+    """True only if h264_nvenc actually encodes (NVIDIA GPU present + usable)."""
+    try:
+        r = subprocess.run(
+            ["ffmpeg", "-hide_banner", "-loglevel", "error", "-f", "lavfi",
+             "-i", "testsrc=size=64x64:rate=1:duration=0.1", "-frames:v", "1",
+             "-c:v", "h264_nvenc", "-f", "null", "-"],
+            capture_output=True, text=True, timeout=25)
+        return r.returncode == 0
+    except Exception:
+        return False
+
+
+_GPU = _nvenc_ok()  # probe once
+
+
 def encode_part(src: Path, out: Path) -> None:
+    hwaccel = ["-hwaccel", "cuda"] if _GPU else []
+    venc = (["-c:v", "h264_nvenc", "-preset", "p4", "-rc", "vbr", "-cq", "29", "-b:v", "0"]
+            if _GPU else ["-c:v", "libx264", "-preset", "veryfast", "-crf", "27"])
     subprocess.run(
-        ["ffmpeg", "-y", "-loglevel", "error", "-hwaccel", "cuda", "-i", str(src),
+        ["ffmpeg", "-y", "-loglevel", "error", *hwaccel, "-i", str(src),
          "-map", "0:0", "-map", "0:1", "-vf", "scale=1280:-2,format=yuv420p",
-         "-c:v", "h264_nvenc", "-preset", "p4", "-rc", "vbr", "-cq", "29", "-b:v", "0",
-         "-c:a", "aac", "-b:a", "160k", str(out)],
+         *venc, "-c:a", "aac", "-b:a", "160k", str(out)],
         check=True,
     )
 

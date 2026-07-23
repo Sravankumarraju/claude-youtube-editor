@@ -7,10 +7,12 @@
 // templates.ts (default = the brand theme). Frame-based only; every interpolate
 // is monotonic + clamped. Reuses useRise / CLAMP for brand motion.
 import React from 'react';
-import { AbsoluteFill, interpolate, useCurrentFrame, Series, Audio, staticFile } from 'remotion';
+import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig, Series, Audio, staticFile } from 'remotion';
+import { Star, MousePointer2 } from 'lucide-react';
 import { SHADOW, EASINGS } from '../brand';
 import { getTemplate, DEFAULT_THEME, type Theme } from '../templates';
 import { useRise, CLAMP } from './kit';
+import { WebBrowserFrame, chromeH } from './browser';
 
 // Brand motion easing (not themed) — reused by every scene's enter animation.
 const EASE = EASINGS.easeOut;
@@ -29,7 +31,15 @@ export type Scene =
   | { type: 'steps'; dur: number; eyebrow?: string; steps: string[]; glow?: string; narration?: string; audio?: string }
   | { type: 'code'; dur: number; eyebrow?: string; filename?: string; lines: string[]; glow?: string; narration?: string; audio?: string }
   | { type: 'bullets'; dur: number; eyebrow?: string; title?: string; points: string[]; glow?: string; narration?: string; audio?: string }
+  | { type: 'repo_scroll'; dur: number; eyebrow?: string; glow?: string; narration?: string; audio?: string; repo: RepoView }
   | { type: 'cta'; dur: number; title: string; sub?: string; glow?: string; narration?: string; audio?: string };
+
+// The GitHub page shown in the repo-scroll scene (filled by the generator from source.json).
+export type RepoView = {
+  owner: string; name: string; url: string;
+  stars?: number; description?: string; topics?: string[];
+  readme?: string[]; files?: string[];
+};
 
 type Fmt = { vertical: boolean; captions: boolean };
 
@@ -266,6 +276,123 @@ const CtaScene: React.FC<{ s: Extract<Scene, { type: 'cta' }>; f: Fmt }> = ({ s,
   );
 };
 
+// ---- repo scroll-&-explain ------------------------------------------------
+const formatStars = (n?: number): string =>
+  n == null ? '' : n >= 1000 ? `${(n / 1000).toFixed(n >= 10000 ? 0 : 1)}k` : String(n);
+
+// One fixed-height README row (heading / bullet / paragraph) — fixed height so
+// the scroll distance is computed exactly, with no layout measurement.
+const ReadmeLine: React.FC<{ text: string; h: number; theme: Theme }> = ({ text, h, theme }) => {
+  const base = { height: h, display: 'flex', alignItems: 'center', boxSizing: 'border-box' as const };
+  if (text.startsWith('## '))
+    return <div style={{ ...base, fontFamily: theme.fontDisplay, fontWeight: 700, fontSize: 30, color: theme.d300, borderBottom: `1px solid ${theme.d600}` }}>{clip(text.slice(3), 58)}</div>;
+  if (text.startsWith('- '))
+    return <div style={{ ...base, gap: 14, fontSize: 25, color: theme.d300 }}><span style={{ width: 8, height: 8, borderRadius: '50%', background: theme.accent, flex: '0 0 auto' }} />{clip(text.slice(2), 78)}</div>;
+  return <div style={{ ...base, fontSize: 25, color: theme.d400 }}>{clip(text, 88)}</div>;
+};
+
+const RepoScrollScene: React.FC<{ s: Extract<Scene, { type: 'repo_scroll' }>; f: Fmt }> = ({ s, f }) => {
+  const frame = useCurrentFrame();
+  const theme = useTheme();
+  const { width, height } = useVideoConfig();
+  const repo = s.repo;
+  const glow = s.glow ?? theme.accent;
+  if (!repo || !repo.name) return <Frame glow={glow} f={f}><div /></Frame>;
+
+  const uiScale = pick(f.vertical, 1.6, 1);
+  const marginX = pick(f.vertical, 40, 120);
+  const top = pick(f.vertical, 150, 96);
+  const bottomSafe = f.captions ? pick(f.vertical, 300, 190) : pick(f.vertical, 70, 70);
+  const box = { x: marginX, y: top, w: width - marginX * 2, h: height - top - bottomSafe };
+  const viewportH = box.h - chromeH(uiScale);
+
+  const files = (repo.files || []).slice(0, 12);
+  const readme = (repo.readme || []).slice(0, 26);
+  const HEADER = 236, PANELHDR = 62, FILEROW = 56, LINE = 48, PAD = 90;
+  const filesH = files.length ? 24 + PANELHDR + files.length * FILEROW : 0;
+  const readmeH = 24 + PANELHDR + 24 + readme.length * LINE;
+  const contentH = HEADER + filesH + readmeH + PAD;
+  const maxScroll = Math.max(0, contentH - viewportH);
+  const scrollY = interpolate(frame, [14, Math.max(30, s.dur - 22)], [0, maxScroll], { ...CLAMP, easing: EASINGS.easeInOut });
+  const progress = maxScroll > 0 ? scrollY / maxScroll : 0;
+
+  // interactive chrome: a scrollbar thumb + a drifting cursor over the page
+  const trackTop = box.y + chromeH(uiScale);
+  const trackH = viewportH;
+  const thumbH = Math.max(48, trackH * Math.min(1, viewportH / contentH));
+  const thumbY = trackTop + progress * (trackH - thumbH);
+  const barOp = interpolate(frame, [10, 22], [0, 1], CLAMP);
+  const curX = box.x + box.w * 0.4 + Math.sin(frame / 22) * 14;
+  const curY = trackTop + viewportH * 0.28 + progress * viewportH * 0.4;
+  const curOp = interpolate(frame, [16, 28], [0, 0.92], CLAMP);
+
+  const panel = { margin: '24px 44px 0', border: `1px solid ${theme.d600}`, borderRadius: 12, overflow: 'hidden' as const };
+  const panelHdr = { height: PANELHDR, display: 'flex', alignItems: 'center', padding: '0 24px', background: theme.d800, fontFamily: theme.fontMono, fontSize: 24, fontWeight: 600, color: theme.d300 };
+
+  const page = (
+    <div style={{ minHeight: contentH, background: theme.d900, color: theme.d300 }}>
+      <div style={{ height: HEADER, padding: '34px 44px', boxSizing: 'border-box', borderBottom: `1px solid ${theme.d600}` }}>
+        <div style={{ fontFamily: theme.fontDisplay, fontSize: 46 }}>
+          <span style={{ color: theme.d400 }}>{repo.owner} / </span>
+          <span style={{ color: theme.accent, fontWeight: 700 }}>{repo.name}</span>
+        </div>
+        {repo.description && <div style={{ fontSize: 27, color: theme.d400, marginTop: 16, maxWidth: '92%' }}>{clip(repo.description, 108)}</div>}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginTop: 22, flexWrap: 'wrap' }}>
+          {repo.stars != null && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: theme.d300, fontFamily: theme.fontMono, fontSize: 24 }}>
+              <Star size={22} color={theme.warn} fill={theme.warn} /> {formatStars(repo.stars)}
+            </div>
+          )}
+          {(repo.topics || []).slice(0, 4).map((t) => (
+            <span key={t} style={{ fontFamily: theme.fontMono, fontSize: 19, color: theme.accent, background: `${theme.accent}1f`, border: `1px solid ${theme.accent}55`, borderRadius: 999, padding: '5px 14px' }}>{t}</span>
+          ))}
+        </div>
+      </div>
+
+      {files.length > 0 && (
+        <div style={panel}>
+          <div style={panelHdr}>Files</div>
+          {files.map((fn) => (
+            <div key={fn} style={{ height: FILEROW, display: 'flex', alignItems: 'center', gap: 16, padding: '0 24px', borderTop: `1px solid ${theme.d600}` }}>
+              <span style={{ width: 22, height: 22, borderRadius: 5, flex: '0 0 auto', background: fn.includes('.') ? theme.accent : theme.warn, opacity: 0.85 }} />
+              <span style={{ fontFamily: theme.fontMono, fontSize: 24, color: theme.d300 }}>{clip(fn, 46)}</span>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <div style={panel}>
+        <div style={panelHdr}>README.md</div>
+        <div style={{ padding: '12px 30px' }}>
+          {readme.map((ln, i) => <ReadmeLine key={i} text={ln} h={LINE} theme={theme} />)}
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <AbsoluteFill style={{ fontFamily: theme.fontBody }}>
+      <ThemedBg glow={glow} theme={theme} />
+      {s.eyebrow && (
+        <div style={{ position: 'absolute', top: pick(f.vertical, 74, 40), left: 0, right: 0, textAlign: 'center', fontFamily: theme.fontMono, fontSize: pick(f.vertical, 24, 26), letterSpacing: 3, color: glow }}>
+          {s.eyebrow.toUpperCase()}
+        </div>
+      )}
+      <WebBrowserFrame url={repo.url} tabTitle={`${repo.owner}/${repo.name}`} box={box} uiScale={uiScale} pageBg={theme.d900} scrollY={scrollY}>
+        {page}
+      </WebBrowserFrame>
+      {/* scrollbar thumb */}
+      {maxScroll > 0 && (
+        <div style={{ position: 'absolute', left: box.x + box.w - 16, top: thumbY, width: 7, height: thumbH, borderRadius: 999, background: theme.d400, opacity: barOp * 0.6 }} />
+      )}
+      {/* drifting cursor — reads as someone browsing the repo */}
+      <div style={{ position: 'absolute', left: curX, top: curY, opacity: curOp, filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.5))' }}>
+        <MousePointer2 size={40} color="#ffffff" fill="#ffffff" strokeWidth={1.5} />
+      </div>
+    </AbsoluteFill>
+  );
+};
+
 const RenderScene: React.FC<{ s: Scene; f: Fmt }> = ({ s, f }) => {
   switch (s.type) {
     case 'title': return <TitleScene s={s} f={f} />;
@@ -274,33 +401,80 @@ const RenderScene: React.FC<{ s: Scene; f: Fmt }> = ({ s, f }) => {
     case 'steps': return <StepsScene s={s} f={f} />;
     case 'code': return <CodeScene s={s} f={f} />;
     case 'bullets': return <BulletsScene s={s} f={f} />;
+    case 'repo_scroll': return <RepoScrollScene s={s} f={f} />;
     case 'cta': return <CtaScene s={s} f={f} />;
     default: return null;
   }
 };
 
-// ---- caption band ----------------------------------------------------------
+// ---- caption band (chunked, YouTube-style) --------------------------------
+// Split narration into short phrases (<=6 words, breaking on clause punctuation)
+// so captions read one crisp line at a time instead of a wall of text.
+const chunkText = (t: string): string[] => {
+  const words = t.split(/\s+/).filter(Boolean);
+  const chunks: string[] = [];
+  let cur: string[] = [];
+  for (const w of words) {
+    cur.push(w);
+    const clause = /[.,!?;:]$/.test(w);
+    if (cur.length >= 6 || (clause && cur.length >= 3)) {
+      chunks.push(cur.join(' '));
+      cur = [];
+    }
+  }
+  if (cur.length) chunks.push(cur.join(' '));
+  return chunks;
+};
+
 const Caption: React.FC<{ text: string; dur: number; vertical: boolean }> = ({ text, dur, vertical }) => {
   const frame = useCurrentFrame();
   const theme = useTheme();
-  const op = interpolate(frame, [4, 14, dur - 8, dur - 2], [0, 1, 1, 0], CLAMP);
   const clean = stripEmoji(text);
   if (!clean) return null;
+  const chunks = chunkText(clean);
+  const totalWords = chunks.reduce((a, c) => a + c.split(' ').length, 0) || 1;
+  const startF = 2;
+  const endF = Math.max(startF + 6, dur - 2);
+  const span = endF - startF;
+  // give each chunk a window proportional to its word count (tracks speech pace)
+  let acc = 0;
+  const wins = chunks.map((c) => {
+    const s = startF + (span * acc) / totalWords;
+    acc += c.split(' ').length;
+    return [s, startF + (span * acc) / totalWords] as const;
+  });
+  let idx = wins.findIndex(([s, e]) => frame >= s && frame < e);
+  if (idx < 0) idx = frame < startF ? 0 : chunks.length - 1;
+  const [s] = wins[idx];
+  const op = interpolate(frame, [s, s + 4], [0, 1], CLAMP);
+  const pop = interpolate(frame, [s, s + 6], [0.94, 1], { ...CLAMP, easing: EASINGS.easeOut });
   return (
     <div style={{
-      position: 'absolute', left: 0, right: 0, bottom: pick(vertical, 150, 70),
-      display: 'flex', justifyContent: 'center', padding: '0 60px', opacity: op,
+      position: 'absolute', left: 0, right: 0, bottom: pick(vertical, 170, 84),
+      display: 'flex', justifyContent: 'center', padding: '0 60px',
     }}>
       <div style={{
-        maxWidth: pick(vertical, '92%', 1400), textAlign: 'center',
-        background: 'rgba(13,17,23,0.86)', color: '#f4f4f7', borderRadius: 14,
-        padding: pick(vertical, '18px 26px', '16px 30px'),
-        fontFamily: theme.fontBody, fontWeight: 600, fontSize: pick(vertical, 40, 34), lineHeight: 1.3,
+        maxWidth: pick(vertical, '94%', 1500), textAlign: 'center',
+        background: 'rgba(9,12,18,0.9)', color: '#ffffff', borderRadius: 16,
+        padding: pick(vertical, '16px 30px', '14px 34px'),
+        boxShadow: '0 8px 30px rgba(0,0,0,0.35)',
+        opacity: op, transform: `scale(${pop})`,
+        fontFamily: theme.fontBody, fontWeight: 700, fontSize: pick(vertical, 48, 40),
+        lineHeight: 1.25, letterSpacing: 0.2, whiteSpace: 'nowrap',
       }}>
-        {clean}
+        {chunks[idx]}
       </div>
     </div>
   );
+};
+
+// Cross-dissolve: fade each scene in/out over a persistent background so cuts
+// become smooth dissolves (no hard jumps, no black flashes).
+const SceneFade: React.FC<{ dur: number; children: React.ReactNode }> = ({ dur, children }) => {
+  const frame = useCurrentFrame();
+  const t = Math.min(9, Math.floor(dur / 3));
+  const op = interpolate(frame, [0, t, dur - t, dur], [0, 1, 1, 0], CLAMP);
+  return <AbsoluteFill style={{ opacity: op }}>{children}</AbsoluteFill>;
 };
 
 // ---- the video -------------------------------------------------------------
@@ -310,14 +484,19 @@ export const StoryboardVideo: React.FC<{ scenes: Scene[]; width: number; height:
   const theme = getTemplate(templateId).theme;
   return (
     <ThemeContext.Provider value={theme}>
+      {/* persistent background so scene cross-fades never flash to black */}
+      <AbsoluteFill><ThemedBg glow={theme.accent} theme={theme} /></AbsoluteFill>
       <Series>
-        {scenes.map((s, i) => (
-          <Series.Sequence key={i} durationInFrames={Math.max(1, Math.round(s.dur))}>
-            <RenderScene s={s} f={f} />
-            {captions && s.narration ? <Caption text={s.narration} dur={Math.max(1, Math.round(s.dur))} vertical={vertical} /> : null}
-            {s.audio ? <Audio src={staticFile(s.audio)} /> : null}
-          </Series.Sequence>
-        ))}
+        {scenes.map((s, i) => {
+          const D = Math.max(1, Math.round(s.dur));
+          return (
+            <Series.Sequence key={i} durationInFrames={D}>
+              <SceneFade dur={D}><RenderScene s={s} f={f} /></SceneFade>
+              {captions && s.narration ? <Caption text={s.narration} dur={D} vertical={vertical} /> : null}
+              {s.audio ? <Audio src={staticFile(s.audio)} /> : null}
+            </Series.Sequence>
+          );
+        })}
       </Series>
     </ThemeContext.Provider>
   );

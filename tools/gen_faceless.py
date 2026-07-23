@@ -71,6 +71,52 @@ def _pascal(s: str) -> str:
     return out[:32]
 
 
+def _wrap(text: str, width: int, maxlines: int) -> list[str]:
+    """Greedy word-wrap into up to `maxlines` lines of ~`width` chars."""
+    words, lines, cur = text.split(), [], ""
+    for w in words:
+        if len(cur) + len(w) + 1 > width and cur:
+            lines.append(cur)
+            cur = w
+            if len(lines) >= maxlines:
+                break
+        else:
+            cur = f"{cur} {w}".strip()
+    if cur and len(lines) < maxlines:
+        lines.append(cur)
+    return lines
+
+
+def build_repo_view(src: dict) -> dict | None:
+    """The GitHub page shown in a repo_scroll scene — grounded in source.json.
+
+    Returns None for non-GitHub sources (the scene is skipped then)."""
+    url = src.get("url") or ""
+    m = re.search(r"github\.com/([^/]+)/([^/#?]+)", url)
+    if not m:
+        return None
+    owner, name = m.group(1), m.group(2).replace(".git", "")
+    summ = strip_emoji((src.get("summary") or "").strip())
+    readme: list[str] = _wrap(summ, 88, 2) if summ else []
+    feats = [strip_emoji(f) for f in (src.get("features") or []) if f][:6]
+    if feats:
+        readme += ["## Features"] + [f"- {f}" for f in feats]
+    pts = [strip_emoji(p) for p in (src.get("key_points") or []) if p][:6]
+    if pts:
+        readme += ["## Highlights"] + [f"- {p}" for p in pts]
+    tech = [t for t in (src.get("tech_stack") or []) if t][:8]
+    if tech:
+        readme += ["## Built with", ", ".join(tech)]
+    return {
+        "owner": owner, "name": name, "url": url,
+        "stars": src.get("stars"),
+        "description": summ[:140],
+        "topics": tech[:6],
+        "files": [f for f in (src.get("structure") or []) if f][:12],
+        "readme": readme[:26],
+    }
+
+
 def build_storyboard(src: dict) -> list[dict]:
     """source.json -> Scene[] (grounded; no invented content)."""
     typ = src.get("type", "text")
@@ -119,6 +165,14 @@ def build_storyboard(src: dict) -> list[dict]:
     }.get(typ, ("Learn more", src.get("url") or ""))
     scenes.append({"type": "cta", "dur": 90, "title": cta[0], "sub": cta[1],
                    "narration": cta[0] + "."})
+
+    # Show the actual repo scrolling (GitHub sources only) right after the overview.
+    repo = build_repo_view(src)
+    if repo:
+        insert_at = 2 if len(scenes) > 2 else len(scenes) - 1
+        scenes.insert(insert_at, {"type": "repo_scroll", "dur": 300, "eyebrow": "on github",
+                                  "repo": repo,
+                                  "narration": f"Here's the {repo['name']} repo on GitHub — {int(repo['stars']):,} stars and everything you need to get going." if repo.get("stars") else f"Here's the {repo['name']} repo on GitHub."})
 
     # Narration is the source of truth for BOTH the voice-over (TTS) and the
     # on-screen captions — keep it emoji-free so the voice never reads "rocket

@@ -1,61 +1,70 @@
 {
   "type": "github",
-  "url": "https://github.com/tirth8205/code-review-graph",
-  "title": "code-review-graph",
-  "summary": "Local-first code intelligence graph for MCP and CLI. Builds a persistent map of your codebase so AI coding tools read only what matters, with benchmarked context reductions on reviews and large-repo workflows.",
+  "url": "http://github.com/koala73/worldmonitor",
+  "title": "worldmonitor",
+  "summary": "Real-time global intelligence dashboard. AI-powered news aggregation, geopolitical monitoring, and infrastructure tracking in a unified situational awareness interface",
   "key_points": [
-    "uses: actions/checkout@v7",
-    "uses: tirth8205/code-review-graph@v2.3.6"
+    "500+ curated news feeds across 15 categories, AI-synthesized into briefs",
+    "Dual map engine — 3D globe globe.gl and WebGL flat map deck.gl with 56 map layer types",
+    "Cross-stream correlation — military, economic, disaster, and escalation signal convergence",
+    "Finance radar — 29 stock exchanges, commodities, crypto, and 7-signal market composite",
+    "Local AI — run everything with Ollama, no API keys required"
   ],
   "features": [
+    "What It Does",
+    "Support Status",
     "Quick Start",
-    "How It Works",
-    "Blast-radius analysis",
-    "Incremental updates in < 2 seconds",
-    "The monorepo problem, solved",
-    "Broad language coverage + Jupyter notebooks"
+    "Tech Stack",
+    "Programmatic Access",
+    "Flight Data"
   ],
   "tech_stack": [
-    "Python",
-    "ai-coding",
-    "claude",
-    "claude-code",
-    "code-review",
-    "graphrag",
-    "incremental",
-    "knowledge-graph"
+    "TypeScript",
+    "agent",
+    "ai",
+    "dashboard",
+    "geopolitics",
+    "mcp",
+    "mcp-server",
+    "monitoring"
   ],
-  "steps": [],
+  "steps": [
+    "git clone https://github.com/koala73/worldmonitor.git",
+    "cd worldmonitor",
+    "npm install",
+    "npm run dev",
+    "npm run dev:tech       # tech.worldmonitor.app",
+    "npm run dev:finance    # finance.worldmonitor.app"
+  ],
   "code_snippets": [
     {
       "filename": "example",
       "lines": [
-        "pip install code-review-graph                     # or: pipx install code-review-graph",
-        "code-review-graph install          # auto-detects and configures all supported platforms",
-        "code-review-graph build            # parse your codebase"
+        "git clone https://github.com/koala73/worldmonitor.git",
+        "cd worldmonitor",
+        "npm install",
+        "npm run dev"
       ]
     }
   ],
   "structure": [
     "AGENTS.md",
+    "ARCHITECTURE.md",
     "CHANGELOG.md",
-    "CLAUDE.md",
     "CODE_OF_CONDUCT.md",
+    "CONCEPTS.md",
     "CONTRIBUTING.md",
-    "GEMINI.md",
-    "LICENSE",
-    "README.hi-IN.md",
-    "README.ja-JP.md",
-    "README.ko-KR.md",
-    "README.md",
-    "README.zh-CN.md"
+    "Dockerfile",
+    "Dockerfile.digest-notifications",
+    "Dockerfile.publish-bootstrap-tiers",
+    "Dockerfile.relay",
+    "Dockerfile.seed-bundle-portwatch-port-activity",
+    "Dockerfile.seed-bundle-resilience-validation"
   ],
   "images": [
-    "https://github.com/tirth8205/code-review-graph"
+    "https://github.com/koala73/worldmonitor"
   ],
-  "stars": 24929,
-  "missing": [
-    "no install/usage commands detected"
-  ],
-  "raw_excerpt": "<h1 align=\"center\" code-review-graph</h1 <a href=\" target=\" blank\" rel=\"noopener noreferrer\" <img src=\" alt=\"tirth8205%2Fcode-review-graph | Trendshift\" width=\"250\" height=\"55\"/ </a <p align=\"center\" <strong Stop burning tokens. Start reviewing smarter.</strong </p <p align=\"center\" <a href=\"README.md\" English</a | <a href=\"README.zh-CN.md\" 简体中文</a | <a href=\"README.ja-JP.md\" 日本語</a | <a href=\"README.ko-KR.md\" 한국어</a | <a href=\"README.hi-IN.md\" हिन्दी</a </p <p align=\"center\" <a href=\" src=\" alt=\"PyPI\" </a <a href=\" src=\" alt=\"Downloads\" </a <a href=\" src=\" alt=\"Stars\" </a <a href=\" src=\" alt="
+  "stars": 68328,
+  "missing": [],
+  "raw_excerpt": "World Monitor 简体中文 README.zh-CN.md Real-time global intelligence dashboard — AI-powered news aggregation, geopolitical monitoring, and infrastructure tracking in a unified situational awareness interface. GitHub stars Discord License: AGPL v3 TypeScript Last commit Latest release npm: worldmonitor smithery badge skills.sh <p align=\"center\" <a href=\" src=\" alt=\"Web App\" </a <a href=\" src=\" alt=\"Tech Variant\" </a <a href=\" src=\" alt=\"Finance Variant\" </a <a href=\" src=\" alt=\"Commodity Variant\" </a <a href=\" src=\" alt=\"Happy Variant\" </a <a href=\" src=\" alt=\"Energy Variant\" </a </p <p align=\"cent"
 }

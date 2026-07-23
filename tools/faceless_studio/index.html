@@ -149,12 +149,25 @@
       <div class="tpl-grid" id="tpl-grid"></div>
 
       <div class="row">
+        <div class="opt">
+          <label for="dur" style="margin:0">Length</label>
+          <select id="dur" style="font-family:var(--mono);font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px">
+            <option value="30">30 sec</option>
+            <option value="60">1 min</option>
+            <option value="120" selected>2 min</option>
+            <option value="180">3 min</option>
+            <option value="300">5 min (max)</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
         <div class="opt"><input type="radio" name="fmt" id="fmt-l" value="landscape" checked /><label for="fmt-l" style="margin:0">Landscape 16:9</label></div>
         <div class="opt"><input type="radio" name="fmt" id="fmt-v" value="vertical" /><label for="fmt-v" style="margin:0">Vertical 9:16</label></div>
+        <div class="opt"><input type="checkbox" id="ai" checked /><label for="ai" style="margin:0">AI script (world-class)</label></div>
         <div class="opt"><input type="checkbox" id="cap" checked /><label for="cap" style="margin:0">Captions</label></div>
         <div class="opt"><input type="checkbox" id="vo" /><label for="vo" style="margin:0">Voice-over (AI narration)</label></div>
       </div>
-      <p class="hint" id="vo-hint" style="margin:10px 0 0">Voice-over speaks each scene with ElevenLabs — adds ~15–40s to the build and uses your API credits. Captions mirror the spoken words (emoji-free).</p>
+      <p class="hint" id="vo-hint" style="margin:10px 0 0"><b>AI script</b> writes a hook-driven, grounded narrative for the chosen length (Gemini). <b>Voice-over</b> speaks it with ElevenLabs (uses API credits). Captions mirror the spoken words (emoji-free). Longer lengths take longer to render.</p>
       <button class="btn" id="create">Create video</button>
     </section>
 
@@ -167,7 +180,19 @@
       <div id="result" class="hidden"><video id="vid" class="result" controls></video>
         <div class="row"><a class="btn ghost" id="dl" download>Download MP4</a>
           <button class="btn ghost" id="again">Make another</button>
-          <button class="btn" id="to-dash">Back to dashboard</button></div></div>
+          <button class="btn" id="to-dash">Back to dashboard</button></div>
+        <div id="pkg" style="margin-top:22px;border-top:1px solid var(--line);padding-top:18px">
+          <h3>Packaging — earn the click</h3>
+          <p class="hint">Title options, a description, and thumbnails (Gemini). Grounded in the repo.</p>
+          <button class="btn ghost sm" id="pkg-btn">Generate title + thumbnails</button>
+          <pre class="logbox hidden" id="pkg-log" style="margin-top:12px"></pre>
+          <div id="pkg-out" class="hidden">
+            <div id="pkg-titles" style="margin-top:14px"></div>
+            <p class="hint" id="pkg-desc" style="margin:8px 0 0"></p>
+            <div id="pkg-thumbs" class="grid-v" style="margin-top:14px"></div>
+          </div>
+        </div>
+      </div>
       <div id="gen-err" class="err hidden"></div>
     </section>
   </section>
@@ -209,7 +234,7 @@ async function loadVideos() {
     const fmt = v.vertical ? "9:16" : (v.width ? "16:9" : "video");
     const url = v.url + "?t=" + v.mtime;
     return `<div class="vcard ${v.vertical ? "vert" : ""}">
-      <video src="${esc(url)}" preload="metadata" controls muted></video>
+      <video src="${esc(url)}" preload="metadata" controls></video>
       <div class="vmeta">
         <div class="name">${esc(v.id)}</div>
         <div class="badges"><span class="badge">${fmt}</span><span class="badge">${mb} MB</span><span class="badge">${esc(when)}</span></div>
@@ -323,6 +348,8 @@ $("create").addEventListener("click", async () => {
     format: document.querySelector('input[name=fmt]:checked').value,
     captions: $("cap").checked,
     voiceover: $("vo").checked,
+    ai: $("ai").checked,
+    duration: parseInt($("dur").value, 10) || 120,
     template: selectedTemplate,
     title: $("r-title").value, summary: $("r-summary").value,
     key_points: $("r-points").value.split("\n").map((x) => x.trim()).filter(Boolean),
@@ -358,6 +385,40 @@ async function tick() {
 function showGenErr(msg) { const b = $("gen-err"); b.textContent = msg + "  Your source and storyboard were saved — fix the input and try again."; b.classList.remove("hidden"); }
 $("again").addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 $("to-dash").addEventListener("click", showDash);
+
+// ---------- packaging (title + thumbnails) ----------
+let pkgPoll = null;
+$("pkg-btn").addEventListener("click", async () => {
+  $("pkg-btn").disabled = true;
+  $("pkg-log").classList.remove("hidden"); $("pkg-log").textContent = "starting…";
+  $("pkg-out").classList.add("hidden");
+  const r = await fetch("/api/package", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ count: 2 }) });
+  if (r.status === 409) { $("pkg-log").textContent = "Packaging already running — waiting…"; }
+  pkgPoll = setInterval(pkgTick, 1500); pkgTick();
+});
+async function pkgTick() {
+  const s = await (await fetch("/api/package-status")).json();
+  $("pkg-log").textContent = (s.log || []).join("\n") || "…";
+  $("pkg-log").scrollTop = $("pkg-log").scrollHeight;
+  if (!s.running && (s.ok || s.error)) {
+    clearInterval(pkgPoll); $("pkg-btn").disabled = false;
+    if (s.ok && s.data) renderPkg(s.data);
+  }
+}
+function renderPkg(d) {
+  $("pkg-out").classList.remove("hidden");
+  $("pkg-titles").innerHTML = "<b>Title options</b><ul style='margin:6px 0 0;padding-left:20px'>" +
+    (d.titles || []).map((t) => `<li>${esc(t)}</li>`).join("") + "</ul>";
+  $("pkg-desc").textContent = d.description || "";
+  $("pkg-thumbs").innerHTML = (d.thumbnails || []).map((t, i) => {
+    const base = (t.file || "").split("/").pop();
+    const jpgBase = (t.jpg || t.file || "").split("/").pop();
+    const png = "/pkg/" + base + "?t=" + Date.now();
+    return `<div class="vcard"><img src="${esc(png)}" alt="thumbnail" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block"/>
+      <div class="vmeta"><div class="name">${esc(t.overlay || ("Thumbnail " + (i + 1)))}</div>
+      <div class="vactions"><a class="btn ghost sm" href="/pkg/${esc(jpgBase)}" download>Download JPG</a></div></div></div>`;
+  }).join("") || '<p class="hint">No thumbnails returned.</p>';
+}
 
 // ---------- boot ----------
 loadTemplates();

@@ -1,0 +1,86 @@
+{
+  "repo": "RuView",
+  "concepts": [
+    {
+      "id": "rf-weather-station",
+      "name": "The Indoor Weather Service",
+      "premise": "Treat ambient indoor WiFi as a delicate atmospheric microclimate where every human movement causes measurable radio pressure shifts.",
+      "hook": "Right now your living room is filled with an invisible atmosphere of radio waves, and every heartbeat causes a storm.",
+      "metaphor": "Micro-meteorology of ambient radio frequency turbulence",
+      "mood": [
+        "cinematic",
+        "atmospheric",
+        "analytical"
+      ],
+      "palette": {
+        "bg": "#0B132B",
+        "accent": "#48CAE4",
+        "accent2": "#5BC0BE"
+      },
+      "motif": "Isobaric RF wave contour maps deforming around unseen human silhouettes in real time",
+      "sections": [
+        "The Invisible Indoor Atmosphere",
+        "Reading Body Movement as RF Turbulence",
+        "The 55KB Micro-Radar Engine",
+        "Measuring Heartbeats Like Ocean Tides",
+        "Fall Detection Storm Warnings",
+        "Automating Home Assistant Weather Alarms"
+      ],
+      "why_it_fits": "WiFi Channel State Information behaves identically to atmospheric wave scattering, turning routine RF noise into predictive room telemetry."
+    },
+    {
+      "id": "dark-sector-atc",
+      "name": "Dark Sector Controller",
+      "premise": "Reframe smart home presence as air traffic control tracking non-cooperative targets through zero-visibility blackout conditions.",
+      "hook": "Air traffic control tracks airliners through solid cloud cover without cameras; this eight dollar chip does the exact same thing for your bedroom.",
+      "metaphor": "Dark-sector passive radar tactical command center",
+      "mood": [
+        "tense",
+        "precise",
+        "tactical"
+      ],
+      "palette": {
+        "bg": "#0A0E17",
+        "accent": "#00FF66",
+        "accent2": "#FF3366"
+      },
+      "motif": "Polar radar scope sweeps tagging human targets with live cardiac telemetry callouts",
+      "sections": [
+        "Zero Visibility Target Acquisition",
+        "Passive Radar Physics on ESP32",
+        "Penetrating Solid Brick Barriers",
+        "Target Telemetry: Pulse and Breathing",
+        "Tracking Sleep Stages in Blackout",
+        "Automated Home Defense Integrations"
+      ],
+      "why_it_fits": "RuView generates spatial vector tracking and vital sign telemetry purely from commodity hardware echo patterns without optical sight."
+    },
+    {
+      "id": "55kb-ghostwriter",
+      "name": "The 55KB Shadow Reporter",
+      "premise": "Expose how a minuscule Rust binary hijacks existing household router chatter to log human existence straight to Home Assistant.",
+      "hook": "What if I told you an eight dollar chip running fifty-five kilobytes of Rust can read your pulse through a closed door?",
+      "metaphor": "Embedded low-footprint wire reporter logging physical events",
+      "mood": [
+        "contrarian",
+        "minimalist",
+        "technical"
+      ],
+      "palette": {
+        "bg": "#121212",
+        "accent": "#FF9E00",
+        "accent2": "#E0AFA0"
+      },
+      "motif": "Live binary CSI telemetry streams rendering directly into clean Home Assistant event logs",
+      "sections": [
+        "The Extreme 55KB Memory Constraint",
+        "Intercepting Raw ESP32 Router Echoes",
+        "Reconstructing Poses Without Pixels",
+        "Apnea Screening in Total Darkness",
+        "Zero-Camera Privacy Architecture",
+        "Deploying the Rust Wire to Home Assistant"
+      ],
+      "why_it_fits": "Highlights RuView's radical efficiency in compressing complex Hugging Face spatial models down to bare-metal microcontroller memory footprints."
+    }
+  ]
+}

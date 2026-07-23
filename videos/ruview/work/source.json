@@ -1,0 +1,78 @@
+{
+  "type": "github",
+  "url": "https://github.com/ruvnet/RuView",
+  "title": "RuView",
+  "summary": "π RuView turns commodity WiFi signals into real-time spatial intelligence, vital sign monitoring, and presence detection — all without a single pixel of video.",
+  "key_points": [
+    "Presence and occupancy — detect people through walls, count them, track entries and exits",
+    "Vital signs — breathing rate and heart rate, contactless, while sleeping or sitting",
+    "Activity recognition — walking, sitting, gestures, falls — from temporal CSI patterns",
+    "Sleep quality — overnight monitoring with sleep stage classification and apnea screening",
+    "Runs on an $8 ESP32 chip the entire model fits in 55 KB of memory"
+  ],
+  "features": [
+    "See through walls with WiFi",
+    "Built for low-power edge applications",
+    "🤗 Pretrained model on Hugging Face",
+    "Results & proof",
+    "🧩 Edge Module Catalog",
+    "🫀 Health — <sub>14 modules</sub>"
+  ],
+  "tech_stack": [
+    "Rust",
+    "awesome",
+    "claude",
+    "densepose",
+    "esp32",
+    "firmware",
+    "home-assistant",
+    "home-automation"
+  ],
+  "steps": [
+    "docker pull ruvnet/wifi-densepose:latest",
+    "docker run -p 3000:3000 ruvnet/wifi-densepose:latest",
+    "python -m esptool --chip esp32s3 --port COM9 --baud 460800 \\",
+    "python firmware/esp32-csi-node/provision.py --port COM9 \\",
+    "cd firmware/esp32-csi-node",
+    "pip install huggingface_hub"
+  ],
+  "code_snippets": [
+    {
+      "filename": "example",
+      "lines": [
+        "# Option 1: Docker (simulated data, no hardware needed)",
+        "docker pull ruvnet/wifi-densepose:latest",
+        "docker run -p 3000:3000 ruvnet/wifi-densepose:latest",
+        "# Open http://localhost:3000",
+        "# Option 2a: Live sensing with ESP32-S3 hardware ($9)",
+        "# Flash firmware, provision WiFi, and start sensing:",
+        "python -m esptool --chip esp32s3 --port COM9 --baud 460800 \\",
+        "  write_flash 0x0 bootloader.bin 0x8000 partition-table.bin \\",
+        "  0xf000 ota_data_initial.bin 0x20000 esp32-csi-node.bin",
+        "python firmware/esp32-csi-node/provision.py --port COM9 \\",
+        "  --ssid \"YourWiFi\" --password \"secret\" --target-ip 192.168.1.20",
+        "# Option 2b: WiFi 6 + 802.15.4 research sensing with ESP32-C6 ($6-10, ADR-110)"
+      ]
+    }
+  ],
+  "structure": [
+    "CHANGELOG.md",
+    "CLAUDE.md",
+    "LICENSE",
+    "Makefile",
+    "PROOF.md",
+    "README.md",
+    "aether-arena/",
+    "archive/",
+    "assets/",
+    "benchmark_baseline.json",
+    "benchmarks/",
+    "dashboard/"
+  ],
+  "images": [
+    "https://github.com/ruvnet/RuView"
+  ],
+  "stars": 83938,
+  "missing": [],
+  "raw_excerpt": "π RuView <p align=\"center\" <a href=\" <img src=\"assets/ruview-seed.png\" alt=\"RuView - WiFi DensePose\" width=\"100%\" </a </p <p align=\"center\" <a href=\" <img src=\"assets/musica-promo.png\" alt=\"Cognitum Musica\" width=\"100%\" </a </p See through walls with WiFi Turn ordinary WiFi into a spatial intelligence / sensing system. Detect people, measure breathing and heart rate, track movement, and monitor rooms — through walls, in the dark, with no cameras or wearables. Just physics. Works natively with the four major smart-home ecosystems: Home Assistant docs/integrations/home-assistant.md via the HA-DI"
+}

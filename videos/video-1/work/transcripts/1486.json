@@ -1,0 +1,214 @@
+{
+ "id": "55c80874-6fc2-47fd-8828-6679fb04bd75",
+ "language_model": "assemblyai_default",
+ "acoustic_model": "assemblyai_default",
+ "language_code": "kn",
+ "speech_understanding": null,
+ "translated_texts": null,
+ "status": "completed",
+ "audio_url": "https://cdn.assemblyai.com/upload/6ae7652fcac5ca97f27d0ff9e8ce8925614c8f3008d1a856098065b325a3e0bd/3c603535-e7ca-4686-9adb-5e901ef34647",
+ "text": "hello, what is your name that is fish fry, are you not getting it fish fry fish fry",
+ "words": [
+  {
+   "text": "hello,",
+   "start": 3642,
+   "end": 6642,
+   "confidence": 0.103,
+   "speaker": null
+  },
+  {
+   "text": "what",
+   "start": 19082,
+   "end": 19382,
+   "confidence": 0.29052734,
+   "speaker": null
+  },
+  {
+   "text": "is",
+   "start": 19382,
+   "end": 19402,
+   "confidence": 0.32104492,
+   "speaker": null
+  },
+  {
+   "text": "your",
+   "start": 19402,
+   "end": 19422,
+   "confidence": 0.35302734,
+   "speaker": null
+  },
+  {
+   "text": "name",
+   "start": 19422,
+   "end": 21102,
+   "confidence": 0.8149414,
+   "speaker": null
+  },
+  {
+   "text": "that",
+   "start": 37021,
+   "end": 37261,
+   "confidence": 0.032104492,
+   "speaker": null
+  },
+  {
+   "text": "is",
+   "start": 37261,
+   "end": 37401,
+   "confidence": 0.34326172,
+   "speaker": null
+  },
+  {
+   "text": "fish",
+   "start": 37401,
+   "end": 37741,
+   "confidence": 0.36010742,
+   "speaker": null
+  },
+  {
+   "text": "fry,",
+   "start": 37741,
+   "end": 38061,
+   "confidence": 0.215,
+   "speaker": null
+  },
+  {
+   "text": "are",
+   "start": 38541,
+   "end": 39021,
+   "confidence": 0.08428955,
+   "speaker": null
+  },
+  {
+   "text": "you",
+   "start": 39021,
+   "end": 39191,
+   "confidence": 0.7993164,
+   "speaker": null
+  },
+  {
+   "text": "not",
+   "start": 39191,
+   "end": 39361,
+   "confidence": 0.57421875,
+   "speaker": null
+  },
+  {
+   "text": "getting",
+   "start": 39361,
+   "end": 39366,
+   "confidence": 0.24182129,
+   "speaker": null
+  },
+  {
+   "text": "it",
+   "start": 39366,
+   "end": 40023,
+   "confidence": 0.60498047,
+   "speaker": null
+  },
+  {
+   "text": "fish",
+   "start": 40023,
+   "end": 40681,
+   "confidence": 0.31762695,
+   "speaker": null
+  },
+  {
+   "text": "fry",
+   "start": 40681,
+   "end": 41181,
+   "confidence": 0.8442383,
+   "speaker": null
+  },
+  {
+   "text": "fish",
+   "start": 41181,
+   "end": 43121,
+   "confidence": 0.32299805,
+   "speaker": null
+  },
+  {
+   "text": "fry",
+   "start": 43121,
+   "end": 43361,
+   "confidence": 0.63720703,
+   "speaker": null
+  }
+ ],
+ "utterances": null,
+ "confidence": 0.4033173,
+ "audio_duration": 50,
+ "punctuate": true,
+ "format_text": true,
+ "webhook_url": null,
+ "webhook_status_code": null,
+ "webhook_auth": false,
+ "webhook_auth_header_name": null,
+ "speed_boost": false,
+ "auto_highlights_result": null,
+ "auto_highlights": false,
+ "audio_start_from": null,
+ "audio_end_at": null,
+ "word_boost": [],
+ "boost_param": null,
+ "prompt": "Verbatim transcription of a solo YouTube tutorial recording with multiple takes. Transcribe exactly as spoken: keep false starts, repeated words, self-corrections, and filler words (um, uh) \u2014 do not clean them up.",
+ "keyterms_prompt": [],
+ "filter_profanity": false,
+ "redact_pii": false,
+ "redact_pii_audio": false,
+ "redact_pii_audio_quality": null,
+ "redact_pii_audio_options": null,
+ "redact_pii_policies": null,
+ "redact_pii_sub": null,
+ "redact_static_entities": null,
+ "speaker_labels": false,
+ "speaker_options": null,
+ "content_safety": false,
+ "iab_categories": false,
+ "content_safety_labels": {
+  "status": "unavailable",
+  "results": [],
+  "summary": {}
+ },
+ "iab_categories_result": {
+  "status": "unavailable",
+  "results": [],
+  "summary": {}
+ },
+ "language_detection": true,
+ "language_detection_options": null,
+ "language_detection_results": null,
+ "language_confidence_threshold": null,
+ "language_confidence": 0.263,
+ "custom_spelling": null,
+ "throttled": false,
+ "auto_chapters": false,
+ "summarization": false,
+ "summary_type": null,
+ "summary_model": null,
+ "custom_topics": false,
+ "topics": [],
+ "speech_threshold": null,
+ "speech_model": null,
+ "speech_models": [
+  "universal-3-5-pro",
+  "universal-2"
+ ],
+ "speech_model_used": "universal-2",
+ "temperature": null,
+ "remove_audio_tags": "all",
+ "chapters": null,
+ "disfluencies": true,
+ "entity_detection": false,
+ "sentiment_analysis": false,
+ "sentiment_analysis_results": null,
+ "entities": null,
+ "speakers_expected": null,
+ "summary": null,
+ "custom_topics_results": null,
+ "is_deleted": null,
+ "multichannel": null,
+ "project_id": 1928602,
+ "token_id": 1958943
+}
